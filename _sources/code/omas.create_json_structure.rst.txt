@@ -1,0 +1,6 @@
+omas.create\_json\_structure
+============================
+
+.. currentmodule:: omas
+
+.. autofunction:: create_json_structure

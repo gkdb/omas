@@ -1,0 +1,6 @@
+omas.browse\_imas
+=================
+
+.. currentmodule:: omas
+
+.. autofunction:: browse_imas

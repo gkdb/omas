@@ -1,0 +1,447 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Scaling IMAS performance &#8212; OMAS</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img height=40, src="../_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../how.html">Concept</a></li>
+                <li><a href="index.html">Examples</a></li>
+                <li><a href="../install.html">Installation</a></li>
+                <li><a href="../iter.html">ITER</a></li>
+                <li><a href="../omfit.html">OMFIT</a></li>
+                <li><a href="../schema.html">Data schema</a></li>
+                <li><a href="../code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Scaling IMAS performance</a><ul>
+<li><a class="reference internal" href="#scaling-study-in-detail">Scaling study in detail</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Click <a class="reference internal" href="#sphx-glr-download-auto-examples-plot-saveload-scaling-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="scaling-imas-performance">
+<span id="sphx-glr-auto-examples-plot-saveload-scaling-py"></span><h1>Scaling IMAS performance<a class="headerlink" href="#scaling-imas-performance" title="Permalink to this headline">¶</a></h1>
+<p>This example shows a scaling performance study for manipulating OMAS data in hierarchical or tensor format.</p>
+<p>The <strong>hierarchical organization of the IMAS data</strong> structure can in some situations hinder IMAS’s ability to efficiently manipulate large data sets.
+This contrasts to the <strong>multidimensional arrays (ie. tensors)</strong> approach that is commonly used in computer science for high-performance numerical calculations.</p>
+<p>Based on this observation OMAS implements a transformation that casts the data that is contained in the IMAS hierarchical structure as a list of tensors, by taking advantage of the homogeneity of grid sizes that is commonly found across arrays of structures.
+Such transformation and a summary of the scaling results are illustrated here for an hypothetical IDS that has data organized as a series of time-slices:</p>
+<div class="figure align-center">
+<a class="reference external image-reference" href="/.._images/odx_concept.png"><img alt="OMAS implements a transformation that casts the data that is contained in the IMAS hierarchical structure as a list of tensors" src="../_images/odx_concept.png" style="width: 100%;" /></a>
+</div>
+<p>The favorable scaling that is observed when representing IMAS data in tensor form makes a strong case for adopting it.
+Implementing the same system as part of the IMAS backend storage of data and in memory representation would likely greatly benefit IMAS performance in many real-world applications.</p>
+<p>The new tensors representation would also greatly simplify the integration of IMAS with a broad range of tools and numerical libraries that are commonly used across many fields of science.</p>
+<p>Finally, the addition of an extra dimension to the tensors could be used to efficiently store multiple realizations of signals from a distribution function of uncertain quantities.
+Such feature would enable support of uncertainty quantification workflows and Bayesian integrated data analyses within IMAS.</p>
+<div class="section" id="scaling-study-in-detail">
+<h2>Scaling study in detail<a class="headerlink" href="#scaling-study-in-detail" title="Permalink to this headline">¶</a></h2>
+<p>OMAS can seamlessly use either hierarchical or tensor representations as the backend for storing data both in memory and on file, and transform from one format to the other.
+The mapping function is generic and can handle nested hierarchical list of structures (not only in time).
+Also OMAS can automatically determine which data can be collected across the hierarchical structure, which cannot, and seamlessly handle both at the same time.</p>
+<p>The following diagram summarizes the tests performed in this scaling study.
+Benchmarks show that most operations stemming from the hierarchical representation of the data scale linearly with with the number of time-slices in the sample IDS (<strong>red markers</strong> in the diagram), whereas operations that make only use of the tensor representation show little to no dependency on the dataset size (<strong>green markers</strong> in the diagram).
+As a result the tensors representation can be several orders of magnitude faster than a hierarchical organization, even for datasets of modest size.</p>
+<div class="figure align-center">
+<a class="reference external image-reference" href="/.._images/odx_flow.png"><img alt="OMAS can seamlessly use either hierarchical or tensor representations as backed for storing data both in memory and on file, and transform from one format to the other" src="../_images/odx_flow.png" style="width: 50%;" /></a>
+</div>
+<p>Scaling plots and code used for the benchmark follow:</p>
+<ul class="sphx-glr-horizontal">
+<li><img alt="../_images/sphx_glr_plot_saveload_scaling_001.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_plot_saveload_scaling_001.png" />
+</li>
+<li><img alt="../_images/sphx_glr_plot_saveload_scaling_002.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_plot_saveload_scaling_002.png" />
+</li>
+<li><img alt="../_images/sphx_glr_plot_saveload_scaling_003.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_plot_saveload_scaling_003.png" />
+</li>
+</ul>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>1/100
+2/100
+3/100
+6/100
+10/100
+15/100
+25/100
+39/100
+63/100
+100/100
+[1, 2, 3, 6, 10, 15, 25, 39, 63, 100]
+{&#39;HA&#39;: [6.580352783203125e-05,
+        5.896091461181641e-05,
+        6.296634674072266e-05,
+        5.671977996826172e-05,
+        5.324125289916992e-05,
+        5.342642466227214e-05,
+        5.615997314453125e-05,
+        5.3674135452661757e-05,
+        5.777147081163195e-05,
+        6.475400924682618e-05],
+ &#39;HB&#39;: [6.499290466308594e-05,
+        9.751319885253906e-05,
+        0.00014190673828125,
+        0.00026869773864746094,
+        0.0003645896911621094,
+        0.0005243062973022461,
+        0.0008420944213867188,
+        0.0013247966766357423,
+        0.002126908302307129,
+        0.0034715890884399413],
+ &#39;HM&#39;: [0.12194418907165527,
+        0.11880087852478027,
+        0.12268710136413574,
+        0.1262669563293457,
+        0.14459586143493652,
+        0.1536850929260254,
+        0.19206809997558594,
+        0.2878270149230957,
+        0.32131314277648926,
+        0.5096549987792969],
+ &#39;HR&#39;: [0.025803089141845703,
+        0.045042991638183594,
+        0.07628202438354492,
+        0.1268138885498047,
+        0.20952701568603516,
+        0.3119940757751465,
+        0.5223119258880615,
+        0.8128700256347656,
+        1.302638053894043,
+        2.1683361530303955],
+ &#39;HS&#39;: [8.916854858398438e-05,
+        0.00010597705841064453,
+        0.00015266736348470053,
+        0.0002938111623128255,
+        0.00035970211029052735,
+        0.0005356629689534505,
+        0.0008501148223876953,
+        0.0013263836885109926,
+        0.002139065000745985,
+        0.0037282896041870117],
+ &#39;HW&#39;: [0.07886481285095215,
+        0.03694796562194824,
+        0.06454205513000488,
+        0.10100984573364258,
+        0.16382718086242676,
+        0.24741888046264648,
+        0.40589213371276855,
+        0.640437126159668,
+        1.0369269847869873,
+        1.675680160522461],
+ &#39;TA&#39;: [0.00016539096832275392,
+        0.0001801609992980957,
+        0.0001802682876586914,
+        0.00015433231989542644,
+        0.00014478206634521484,
+        0.00013866583506266276,
+        0.0001431884765625,
+        0.00014685606345152242,
+        0.00014638560158865792,
+        0.0001491520404815674],
+ &#39;TB&#39;: [9.140968322753906e-05,
+        0.00010811090469360351,
+        8.087158203125e-05,
+        8.23815663655599e-05,
+        8.057117462158203e-05,
+        7.791360219319662e-05,
+        8.120059967041017e-05,
+        8.080800374348958e-05,
+        8.156678033253504e-05,
+        7.990312576293946e-05],
+ &#39;TM&#39;: [0.019195079803466797,
+        0.026349782943725586,
+        0.02646183967590332,
+        0.04320812225341797,
+        0.0673069953918457,
+        0.0861959457397461,
+        0.1514730453491211,
+        0.2327430248260498,
+        0.3769190311431885,
+        0.6263241767883301],
+ &#39;TR&#39;: [0.03668093681335449,
+        0.03721880912780762,
+        0.03171277046203613,
+        0.03136396408081055,
+        0.032508134841918945,
+        0.03144502639770508,
+        0.03188490867614746,
+        0.03142499923706055,
+        0.03215217590332031,
+        0.0371549129486084],
+ &#39;TS&#39;: [0.00010590553283691406,
+        9.86933708190918e-05,
+        9.729862213134766e-05,
+        8.249680201212565e-05,
+        8.182048797607422e-05,
+        8.22003682454427e-05,
+        8.189201354980469e-05,
+        8.17408928504357e-05,
+        8.150320204477462e-05,
+        8.452510833740234e-05],
+ &#39;TW&#39;: [0.24837493896484375,
+        0.16985797882080078,
+        0.172760009765625,
+        0.16165590286254883,
+        0.2506749629974365,
+        0.1626300811767578,
+        0.1608891487121582,
+        0.15933990478515625,
+        0.17034292221069336,
+        0.17642617225646973]}
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span> <span class="nn">omas</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span>
+
+<span class="n">ods</span> <span class="o">=</span> <span class="n">ODS</span><span class="p">()</span>
+<span class="n">ods</span><span class="o">.</span><span class="n">sample_equilibrium</span><span class="p">()</span>
+
+<span class="n">max_n</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">max_samples</span> <span class="o">=</span> <span class="mi">11</span>
+<span class="n">stats_reps</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">max_n</span><span class="p">),</span> <span class="n">max_samples</span><span class="p">))))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">max_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+
+<span class="n">times</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="nb">type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">]:</span>  <span class="c1"># hierarchical or tensor</span>
+    <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;W&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]:</span>  <span class="c1"># Read, Write, Mapping, Array access, Stripe access, Bulk access</span>
+        <span class="n">times</span><span class="p">[</span><span class="nb">type</span> <span class="o">+</span> <span class="n">action</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/</span><span class="si">%d</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">samples</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+
+    <span class="c1"># keep adding time slices to the data structure</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice&#39;</span><span class="p">]),</span> <span class="n">n</span><span class="p">):</span>
+        <span class="n">ods</span><span class="o">.</span><span class="n">sample_equilibrium</span><span class="p">(</span><span class="n">time_index</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+
+    <span class="c1"># hierarchical write to HDF5</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">()</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;tmp.h5&#39;</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">save_omas_h5</span><span class="p">(</span><span class="n">ods</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="n">times</span><span class="p">[</span><span class="s1">&#39;HW&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>
+
+    <span class="c1"># hierarchical read from HDF5</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">load_omas_h5</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">times</span><span class="p">[</span><span class="s1">&#39;HR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>
+
+    <span class="c1"># hierarchical access to individual array</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">stats_reps</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice.</span><span class="si">%d</span><span class="s1">.profiles_1d.psi&#39;</span> <span class="o">%</span> <span class="n">kk</span><span class="p">]</span>
+    <span class="n">times</span><span class="p">[</span><span class="s1">&#39;HA&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">stats_reps</span><span class="p">))</span>
+
+    <span class="c1"># hierarchical slice across the data structure</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice.:.profiles_1d.psi&#39;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">times</span><span class="p">[</span><span class="s1">&#39;HS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+
+    <span class="c1"># hierarchical bulk access to data</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">stats_reps</span><span class="p">):</span>
+        <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice.:.profiles_1d.psi&#39;</span><span class="p">]</span>
+    <span class="n">times</span><span class="p">[</span><span class="s1">&#39;HB&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">stats_reps</span><span class="p">))</span>
+
+    <span class="c1"># hierarchical mapping to tensor</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">odx</span> <span class="o">=</span> <span class="n">ods_2_odx</span><span class="p">(</span><span class="n">ods</span><span class="p">)</span>
+    <span class="n">times</span><span class="p">[</span><span class="s1">&#39;HM&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">()</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;tmp.ds&#39;</span>
+
+    <span class="c1"># tensor write to HDF5</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">save_omas_dx</span><span class="p">(</span><span class="n">odx</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="n">times</span><span class="p">[</span><span class="s1">&#39;TW&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>
+
+    <span class="c1"># tensor read from HDF5</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">odx</span> <span class="o">=</span> <span class="n">load_omas_dx</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">times</span><span class="p">[</span><span class="s1">&#39;TR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>
+
+    <span class="c1"># tensor mapping to hierarchical</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">ods</span> <span class="o">=</span> <span class="n">odx_2_ods</span><span class="p">(</span><span class="n">odx</span><span class="p">)</span>
+    <span class="n">times</span><span class="p">[</span><span class="s1">&#39;TM&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>
+
+    <span class="c1"># tensor access to individual array</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">stats_reps</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">odx</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice.</span><span class="si">%d</span><span class="s1">.profiles_1d.psi&#39;</span> <span class="o">%</span> <span class="n">kk</span><span class="p">]</span>
+    <span class="n">times</span><span class="p">[</span><span class="s1">&#39;TA&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">stats_reps</span><span class="p">))</span>
+
+    <span class="c1"># tensor slice across the data structure</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">stats_reps</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">odx</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice.:.profiles_1d.psi&#39;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">times</span><span class="p">[</span><span class="s1">&#39;TS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">stats_reps</span><span class="p">))</span>
+
+    <span class="c1"># tensor bulk access to data</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">stats_reps</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">odx</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice.:.profiles_1d.psi&#39;</span><span class="p">]</span>
+    <span class="n">times</span><span class="p">[</span><span class="s1">&#39;TB&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">stats_reps</span><span class="p">))</span>
+
+<span class="c1"># print numbers to screen</span>
+<span class="k">print</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">times</span><span class="p">)</span>
+
+<span class="c1"># plot read/write scaling</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="k">for</span> <span class="nb">type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">]:</span>  <span class="c1"># hierarchical or tensor</span>
+    <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;W&#39;</span><span class="p">]:</span>  <span class="c1"># Read, Write</span>
+        <span class="n">pyplot</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">times</span><span class="p">[</span><span class="nb">type</span> <span class="o">+</span> <span class="n">action</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="nb">type</span> <span class="o">+</span> <span class="n">action</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">][</span><span class="s1">&#39;H&#39;</span> <span class="ow">in</span> <span class="nb">type</span><span class="p">])</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;# of Equilibrium Time Slices&#39;</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Read/Write&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="c1"># plot mapping scaling</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="k">for</span> <span class="nb">type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">]:</span>  <span class="c1"># hierarchical or tensor</span>
+    <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;M&#39;</span><span class="p">]:</span>  <span class="c1"># Mapping</span>
+        <span class="n">pyplot</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">times</span><span class="p">[</span><span class="nb">type</span> <span class="o">+</span> <span class="n">action</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="nb">type</span> <span class="o">+</span> <span class="n">action</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">][</span><span class="s1">&#39;H&#39;</span> <span class="ow">in</span> <span class="nb">type</span><span class="p">])</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;# of Equilibrium Time Slices&#39;</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Mapping&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="c1"># plot access scaling</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="k">for</span> <span class="nb">type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">]:</span>  <span class="c1"># hierarchical or tensor</span>
+    <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]:</span>  <span class="c1"># Array access, Stripe access, Bulk access</span>
+        <span class="n">pyplot</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">times</span><span class="p">[</span><span class="nb">type</span> <span class="o">+</span> <span class="n">action</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="nb">type</span> <span class="o">+</span> <span class="n">action</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">][</span><span class="s1">&#39;H&#39;</span> <span class="ow">in</span> <span class="nb">type</span><span class="p">])</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;# of Equilibrium Time Slices&#39;</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Access&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-saveload-scaling-py">
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" download="" href="../_downloads/ff15607d86f1528dda1d42674952775a/plot_saveload_scaling.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_saveload_scaling.py</span></code></a></div>
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" download="" href="../_downloads/15637cd4ca992b19f6216c1c31aaf2c3/plot_saveload_scaling.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_saveload_scaling.ipynb</span></code></a></div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017-2019 O. Meneghini and collaborators.<br/>
+      Last updated on Nov 19, 2019.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+omas.core\_profiles\_consistent
+===============================
+
+.. currentmodule:: omas
+
+.. autofunction:: core_profiles_consistent

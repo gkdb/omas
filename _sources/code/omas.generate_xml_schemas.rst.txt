@@ -1,0 +1,6 @@
+omas.generate\_xml\_schemas
+===========================
+
+.. currentmodule:: omas
+
+.. autofunction:: generate_xml_schemas

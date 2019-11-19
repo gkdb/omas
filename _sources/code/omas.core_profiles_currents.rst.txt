@@ -1,0 +1,6 @@
+omas.core\_profiles\_currents
+=============================
+
+.. currentmodule:: omas
+
+.. autofunction:: core_profiles_currents

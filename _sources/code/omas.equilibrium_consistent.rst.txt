@@ -1,0 +1,6 @@
+omas.equilibrium\_consistent
+============================
+
+.. currentmodule:: omas
+
+.. autofunction:: equilibrium_consistent

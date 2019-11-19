@@ -1,0 +1,46 @@
+omas.omas\_physics
+==================
+
+.. automodule:: omas.omas_physics
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      add_to__ALL__
+      add_to__ODS__
+      cocos_transform
+      core_profiles_consistent
+      core_profiles_currents
+      core_profiles_densities
+      core_profiles_pressures
+      core_profiles_zeff
+      current_from_eq
+      define_cocos
+      equilibrium_consistent
+      equilibrium_transpose_RZ
+      generate_cocos_signals
+      omas_environment
+      search_in_array_structure
+      search_ion
+      transform_current
+      wall_add
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      CocosSignals
+      constants
+   
+   
+
+   
+   
+   

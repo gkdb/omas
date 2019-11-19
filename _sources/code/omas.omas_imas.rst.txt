@@ -1,0 +1,29 @@
+omas.omas\_imas
+===============
+
+.. automodule:: omas.omas_imas
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      browse_imas
+      filled_paths_in_ids
+      imas_empty
+      imas_get
+      imas_open
+      imas_set
+      load_omas_iter_scenario
+      through_omas_imas
+   
+   
+
+   
+   
+   
+
+   
+   
+   

@@ -1,0 +1,38 @@
+omas.omas\_core
+===============
+
+.. automodule:: omas.omas_core
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      codeparams_xml_load
+      codeparams_xml_save
+      load_omas_imas
+      load_omas_itm
+      load_omas_pkl
+      save_omas_imas
+      save_omas_itm
+      save_omas_pkl
+      through_omas_itm
+      through_omas_pkl
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      CodeParameters
+      ODS
+   
+   
+
+   
+   
+   

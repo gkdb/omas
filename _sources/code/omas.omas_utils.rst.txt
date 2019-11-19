@@ -1,0 +1,55 @@
+omas.omas\_utils
+================
+
+.. automodule:: omas.omas_utils
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      closest_index
+      compare_version
+      dict_structures
+      different_ods
+      i2o
+      ids_cpo_mapper
+      is_numeric
+      is_uncertain
+      json_dumper
+      json_loader
+      l2i
+      l2o
+      l2u
+      l2ut
+      list_structures
+      load_structure
+      o2i
+      o2u
+      omas_coordinates
+      omas_info
+      omas_info_node
+      omas_interp1d
+      p2l
+      printd
+      printe
+      printw
+      recursive_encoder
+      recursive_glob
+      recursive_interpreter
+      remove_parentheses
+      sanitize_version_number
+      trim_common_path
+      u2o
+      underline_last
+   
+   
+
+   
+   
+   
+
+   
+   
+   

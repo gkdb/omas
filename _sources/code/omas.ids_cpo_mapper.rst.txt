@@ -1,0 +1,6 @@
+omas.ids\_cpo\_mapper
+=====================
+
+.. currentmodule:: omas
+
+.. autofunction:: ids_cpo_mapper

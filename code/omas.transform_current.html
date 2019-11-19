@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>omas.transform_current &#8212; OMAS</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img height=40, src="../_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../how.html">Concept</a></li>
+                <li><a href="../auto_examples/index.html">Examples</a></li>
+                <li><a href="../install.html">Installation</a></li>
+                <li><a href="../iter.html">ITER</a></li>
+                <li><a href="../omfit.html">OMFIT</a></li>
+                <li><a href="../schema.html">Data schema</a></li>
+                <li><a href="../code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">omas.transform_current</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <div class="section" id="omas-transform-current">
+<h1>omas.transform_current<a class="headerlink" href="#omas-transform-current" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="omas.transform_current">
+<code class="descclassname">omas.</code><code class="descname">transform_current</code><span class="sig-paren">(</span><em>rho</em>, <em>JtoR=None</em>, <em>JparB=None</em>, <em>equilibrium=None</em>, <em>includes_bootstrap=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_physics.html#transform_current"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.transform_current" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given &lt;Jt/R&gt; returns &lt;J.B&gt;, or vice versa
+Transformation obeys &lt;J.B&gt; = (1/f)*(&lt;B^2&gt;/&lt;1/R^2&gt;)*(&lt;Jt/R&gt; + dp/dpsi*(1 - f^2*&lt;1/R^2&gt;/&lt;B^2&gt;))
+N.B. input current must be in the same COCOS as equilibrium.cocosio</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rho</strong> – normalized rho grid for input JtoR or JparB</li>
+<li><strong>JtoR</strong> – input &lt;Jt/R&gt; profile (cannot be set along with JparB)</li>
+<li><strong>JparB</strong> – input &lt;J.B&gt; profile (cannot be set along with JtoR)</li>
+<li><strong>equilibrium</strong> – equilibrium.time_slice[:] ODS containing quanities needed for transformation</li>
+<li><strong>includes_bootstrap</strong> – set to True if input current includes bootstrap</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">&lt;Jt/R&gt; if JparB set or &lt;J.B&gt; if JtoR set</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Example: given total &lt;Jt/R&gt; on rho grid with an existing ods, return &lt;J.B&gt;</dt>
+<dd><dl class="first last docutils">
+<dt>JparB = transform_current(rho, JtoR=JtoR,</dt>
+<dd>equilibrium=ods[‘equilibrium’][‘time_slice’][0],
+includes_bootstrap=True)</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017-2019 O. Meneghini and collaborators.<br/>
+      Last updated on Nov 19, 2019.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+omas.omas\_structure
+====================
+
+.. automodule:: omas.omas_structure
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      create_html_documentation
+      create_json_structure
+      extract_coordinates
+      generate_xml_schemas
+      symlink_imas_structure_versions
+   
+   
+
+   
+   
+   
+
+   
+   
+   

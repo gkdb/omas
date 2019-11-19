@@ -1,0 +1,6 @@
+omas.create\_html\_documentation
+================================
+
+.. currentmodule:: omas
+
+.. autofunction:: create_html_documentation

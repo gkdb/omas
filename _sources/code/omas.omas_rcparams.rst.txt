@@ -1,0 +1,6 @@
+omas.omas\_rcparams
+===================
+
+.. currentmodule:: omas
+
+.. autodata:: omas_rcparams

@@ -1,0 +1,6 @@
+omas.odx\_2\_ods
+================
+
+.. currentmodule:: omas
+
+.. autofunction:: odx_2_ods

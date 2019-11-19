@@ -1,0 +1,885 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>omas.omas_utils &#8212; OMAS</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img height=40, src="../_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../how.html">Concept</a></li>
+                <li><a href="../auto_examples/index.html">Examples</a></li>
+                <li><a href="../install.html">Installation</a></li>
+                <li><a href="../iter.html">ITER</a></li>
+                <li><a href="../omfit.html">OMFIT</a></li>
+                <li><a href="../schema.html">Data schema</a></li>
+                <li><a href="../code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">omas.omas_utils</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <div class="section" id="module-omas.omas_utils">
+<span id="omas-omas-utils"></span><h1>omas.omas_utils<a class="headerlink" href="#module-omas.omas_utils" title="Permalink to this headline">¶</a></h1>
+<p>naming convention translation and misc utilities</p>
+<hr class="docutils" />
+<p class="rubric">Functions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.closest_index" title="omas.omas_utils.closest_index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">closest_index</span></code></a>(my_list[,&nbsp;my_number])</td>
+<td>Given a SORTED iterable (a numeric array or list of numbers) and a numeric scalar my_number, find the index of the number in the list that is closest to my_number</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.compare_version" title="omas.omas_utils.compare_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compare_version</span></code></a>(version1,&nbsp;version2)</td>
+<td>Returns 1 if version1 &gt; version2, -1 if version1 &lt; version2, or 0 if version1 == version2.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.dict_structures" title="omas.omas_utils.dict_structures"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict_structures</span></code></a>(imas_version)</td>
+<td>maps structure names to json filenames</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.different_ods" title="omas.omas_utils.different_ods"><code class="xref py py-obj docutils literal notranslate"><span class="pre">different_ods</span></code></a>(ods1,&nbsp;ods2[,&nbsp;ignore_type,&nbsp;…])</td>
+<td>Checks if two ODSs have any difference and returns the string with the cause of the different</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.i2o" title="omas.omas_utils.i2o"><code class="xref py py-obj docutils literal notranslate"><span class="pre">i2o</span></code></a>(path)</td>
+<td>Formats a IMAS path (‘bla[0].bla’) format into an ODS path (‘bla.0.bla’)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.ids_cpo_mapper" title="omas.omas_utils.ids_cpo_mapper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ids_cpo_mapper</span></code></a>(ids[,&nbsp;cpo])</td>
+<td>translate (some) IDS fields to CPO</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.is_numeric" title="omas.omas_utils.is_numeric"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_numeric</span></code></a>(value)</td>
+<td>Convenience function check if value is numeric</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.is_uncertain" title="omas.omas_utils.is_uncertain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_uncertain</span></code></a>(var)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param var:</th><td class="field-body">Variable or array to test</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.json_dumper" title="omas.omas_utils.json_dumper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">json_dumper</span></code></a>(obj[,&nbsp;objects_encode])</td>
+<td>Dump objects to json format</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.json_loader" title="omas.omas_utils.json_loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">json_loader</span></code></a>(object_pairs[,&nbsp;cls])</td>
+<td>Load json-objects generated by the json_dumper function</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.l2i" title="omas.omas_utils.l2i"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2i</span></code></a>(path)</td>
+<td>Formats a list ([‘bla’,0,’bla’]) into a IMAS path (‘bla[0].bla’)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.l2o" title="omas.omas_utils.l2o"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2o</span></code></a>(path)</td>
+<td>Formats a list ([‘bla’,0,’bla’]) into an ODS path format (‘bla.0.bla’)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.l2u" title="omas.omas_utils.l2u"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2u</span></code></a>(path)</td>
+<td>Formats a list ([‘bla’,0,’bla’]) into a universal ODS path format (‘bla.:.bla’) NOTE: a universal ODS path substitutes lists indices with :</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.l2ut" title="omas.omas_utils.l2ut"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2ut</span></code></a>(path)</td>
+<td>Formats IMAS time lists ([‘bla’,0,’time_slice’,5,’quantity’]) with universal ODS path (‘bla.0.time_slice.:.quantity’)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.list_structures" title="omas.omas_utils.list_structures"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_structures</span></code></a>(imas_version)</td>
+<td>list names of structures in imas version</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.load_structure" title="omas.omas_utils.load_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_structure</span></code></a>(filename,&nbsp;imas_version)</td>
+<td>load omas structure from given json filename or IDS name</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.o2i" title="omas.omas_utils.o2i"><code class="xref py py-obj docutils literal notranslate"><span class="pre">o2i</span></code></a>(path)</td>
+<td>Formats a ODS path (‘bla.0.bla’) format into an IMAS path (‘bla[0].bla’)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.o2u" title="omas.omas_utils.o2u"><code class="xref py py-obj docutils literal notranslate"><span class="pre">o2u</span></code></a>(path)</td>
+<td>Converts an ODS path format (‘bla.0.bla’) into a universal path format (‘bla.:.bla’)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.omas_coordinates" title="omas.omas_utils.omas_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omas_coordinates</span></code></a>([imas_version])</td>
+<td>return list of coordinates</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.omas_info" title="omas.omas_utils.omas_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omas_info</span></code></a>(structures[,&nbsp;imas_version])</td>
+<td>This function returns an ods with the leaf nodes filled with their property informations</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.omas_info_node" title="omas.omas_utils.omas_info_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omas_info_node</span></code></a>(key[,&nbsp;imas_version])</td>
+<td>return information about a given node</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.omas_interp1d" title="omas.omas_utils.omas_interp1d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omas_interp1d</span></code></a>(x,&nbsp;xp,&nbsp;fp[,&nbsp;left,&nbsp;right,&nbsp;period])</td>
+<td>If xp is not increasing, the results are numpy.interp1d nonsense.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.p2l" title="omas.omas_utils.p2l"><code class="xref py py-obj docutils literal notranslate"><span class="pre">p2l</span></code></a>(key)</td>
+<td>Converts the many different ways of addressing an ODS path to a list of keys ([‘bla’,0,’bla’])</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.printd" title="omas.omas_utils.printd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">printd</span></code></a>(*objects,&nbsp;**kw)</td>
+<td>debug print environmental variable OMAS_DEBUG_TOPIC sets the topic to be printed</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.printe" title="omas.omas_utils.printe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">printe</span></code></a>(*objects,&nbsp;**kw)</td>
+<td>print to stderr</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.printw" title="omas.omas_utils.printw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">printw</span></code></a>(*objects,&nbsp;**kw)</td>
+<td>print to stderr</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.recursive_encoder" title="omas.omas_utils.recursive_encoder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">recursive_encoder</span></code></a>(me)</td>
+<td>Traverse dictionaries and list to convert entries strings as appropriate</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.recursive_glob" title="omas.omas_utils.recursive_glob"><code class="xref py py-obj docutils literal notranslate"><span class="pre">recursive_glob</span></code></a>([pattern,&nbsp;rootdir])</td>
+<td>Search recursively for files matching a specified pattern within a rootdir</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.recursive_interpreter" title="omas.omas_utils.recursive_interpreter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">recursive_interpreter</span></code></a>(me[,&nbsp;interpret_method])</td>
+<td>Traverse dictionaries and list to convert strings to int/float when appropriate</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.remove_parentheses" title="omas.omas_utils.remove_parentheses"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_parentheses</span></code></a>(inv[,&nbsp;replace_with])</td>
+<td>function used to remove/replace top-level matching parenthesis from a string</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.sanitize_version_number" title="omas.omas_utils.sanitize_version_number"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sanitize_version_number</span></code></a>(version)</td>
+<td>Removes common non-numerical characters from version numbers obtained from git tags, such as ‘_rc’, etc.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.trim_common_path" title="omas.omas_utils.trim_common_path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">trim_common_path</span></code></a>(p1,&nbsp;p2)</td>
+<td>return paths in lists format trimmed of the common first path between paths p1 and p2</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_utils.u2o" title="omas.omas_utils.u2o"><code class="xref py py-obj docutils literal notranslate"><span class="pre">u2o</span></code></a>(upath,&nbsp;path)</td>
+<td>Replaces <cite>:</cite> and integers in <cite>upath</cite> with ‘:’ and integers from in <cite>path</cite> e.g.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_utils.underline_last" title="omas.omas_utils.underline_last"><code class="xref py py-obj docutils literal notranslate"><span class="pre">underline_last</span></code></a>(text[,&nbsp;offset])</td>
+<td>Utility function to underline the last part of a path</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="omas.omas_utils.closest_index">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">closest_index</code><span class="sig-paren">(</span><em>my_list</em>, <em>my_number=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#closest_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.closest_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a SORTED iterable (a numeric array or list of numbers) and a numeric scalar my_number,
+find the index of the number in the list that is closest to my_number</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>my_list</strong> – Sorted iterable (list or array) to search for number closest to my_number</li>
+<li><strong>my_number</strong> – Number to get close to in my_list</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Index of my_list element closest to my_number</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Note:</th><td class="field-body"><p class="first last">If two numbers are equally close, returns the index of the smallest number.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.compare_version">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">compare_version</code><span class="sig-paren">(</span><em>version1</em>, <em>version2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#compare_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.compare_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns 1 if version1 &gt; version2, -1 if version1 &lt; version2, or 0 if version1 == version2.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.dict_structures">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">dict_structures</code><span class="sig-paren">(</span><em>imas_version</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#dict_structures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.dict_structures" title="Permalink to this definition">¶</a></dt>
+<dd><p>maps structure names to json filenames</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>imas_version</strong> – imas version</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dictionary maps structure names to json filenames</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.different_ods">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">different_ods</code><span class="sig-paren">(</span><em>ods1</em>, <em>ods2</em>, <em>ignore_type=False</em>, <em>ignore_empty=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#different_ods"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.different_ods" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if two ODSs have any difference and returns the string with the cause of the different</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ods1</strong> – first ods to check</li>
+<li><strong>ods2</strong> – second ods to check</li>
+<li><strong>ignore_type</strong> – ignore object type differences</li>
+<li><strong>ignore_empty</strong> – ignore emptry nodes</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">string with reason for difference, or False otherwise</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.i2o">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">i2o</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#i2o"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.i2o" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a IMAS path (‘bla[0].bla’) format into an ODS path (‘bla.0.bla’)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – IMAS path format</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ODS path format</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.ids_cpo_mapper">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">ids_cpo_mapper</code><span class="sig-paren">(</span><em>ids</em>, <em>cpo=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#ids_cpo_mapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.ids_cpo_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>translate (some) IDS fields to CPO</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ids</strong> – input omas data object (IDS format) to read</li>
+<li><strong>cpo</strong> – optional omas data object (CPO format) to which to write to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">cpo</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.is_numeric">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">is_numeric</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#is_numeric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.is_numeric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function check if value is numeric</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> – value to check</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True/False</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.is_uncertain">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">is_uncertain</code><span class="sig-paren">(</span><em>var</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#is_uncertain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.is_uncertain" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var</strong> – Variable or array to test</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if variable is instance of uncertainties or
+array of shape var with elements indicating uncertainty</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.json_dumper">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">json_dumper</code><span class="sig-paren">(</span><em>obj</em>, <em>objects_encode=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#json_dumper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.json_dumper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dump objects to json format</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>obj</strong> – input ojbect</li>
+<li><strong>objects_encode</strong> – how to handle non-standard JSON objects
+* True: encode numpy arrays, complex, and uncertain
+* None: numpy arrays as lists, encode complex, and uncertain
+* False: numpy arrays as lists, fail on complex, and uncertain</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">json-compatible object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.json_loader">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">json_loader</code><span class="sig-paren">(</span><em>object_pairs</em>, <em>cls=&lt;type 'dict'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#json_loader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.json_loader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load json-objects generated by the json_dumper function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>object_pairs</strong> – json-compatible [dict/list] object</li>
+<li><strong>cls</strong> – dicitonary class to use</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">ojbect</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.l2i">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">l2i</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#l2i"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.l2i" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a list ([‘bla’,0,’bla’]) into a IMAS path (‘bla[0].bla’)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – ODS path format</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">IMAS path format</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.l2o">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">l2o</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#l2o"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.l2o" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a list ([‘bla’,0,’bla’]) into an ODS path format (‘bla.0.bla’)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – list of strings and integers</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ODS path format</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.l2u">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">l2u</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#l2u"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.l2u" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a list ([‘bla’,0,’bla’]) into a universal ODS path format (‘bla.:.bla’)
+NOTE: a universal ODS path substitutes lists indices with :</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – list of strings and integers</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">universal ODS path format</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.l2ut">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">l2ut</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#l2ut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.l2ut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats IMAS time lists ([‘bla’,0,’time_slice’,5,’quantity’]) with universal ODS path (‘bla.0.time_slice.:.quantity’)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – list of strings and integers</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ODS path format with time lists in universal format</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.list_structures">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">list_structures</code><span class="sig-paren">(</span><em>imas_version</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#list_structures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.list_structures" title="Permalink to this definition">¶</a></dt>
+<dd><p>list names of structures in imas version</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>imas_version</strong> – imas version</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list with names of structures in imas version</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.load_structure">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">load_structure</code><span class="sig-paren">(</span><em>filename</em>, <em>imas_version</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#load_structure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.load_structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>load omas structure from given json filename or IDS name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filename</strong> – full path to json file or IDS name</li>
+<li><strong>imas_version</strong> – imas version to load the data schema of (optional if filename is a full path)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">tuple with structure, hashing mapper, and ods</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.o2i">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">o2i</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#o2i"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.o2i" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a ODS path (‘bla.0.bla’) format into an IMAS path (‘bla[0].bla’)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – ODS path format</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">IMAS path format</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.o2u">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">o2u</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#o2u"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.o2u" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts an ODS path format (‘bla.0.bla’) into a universal path format (‘bla.:.bla’)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – ODS path format</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">universal ODS path format</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.omas_coordinates">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">omas_coordinates</code><span class="sig-paren">(</span><em>imas_version=u'3.25.0'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#omas_coordinates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.omas_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>return list of coordinates</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>imas_version</strong> – IMAS version to look up</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of strings with IMAS coordinates</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.omas_info">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">omas_info</code><span class="sig-paren">(</span><em>structures</em>, <em>imas_version=u'3.25.0'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#omas_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.omas_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns an ods with the leaf nodes filled with their property informations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>structures</strong> – list with ids names or string with ids name of which to retrieve the info
+if not structures, then all structures are returned (slow and big)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ods</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.omas_info_node">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">omas_info_node</code><span class="sig-paren">(</span><em>key</em>, <em>imas_version=u'3.25.0'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#omas_info_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.omas_info_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>return information about a given node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> – IMAS path</li>
+<li><strong>imas_version</strong> – IMAS version to look up</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dictionary with IMAS information (or an empty dictionary if the node is not found)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.omas_interp1d">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">omas_interp1d</code><span class="sig-paren">(</span><em>x</em>, <em>xp</em>, <em>fp</em>, <em>left=None</em>, <em>right=None</em>, <em>period=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#omas_interp1d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.omas_interp1d" title="Permalink to this definition">¶</a></dt>
+<dd><p>If xp is not increasing, the results are numpy.interp1d nonsense.
+This function wraps numpy.interp1d but makes sure that the x-coordinate sequence xp is increasing.</p>
+<p>One-dimensional linear interpolation.</p>
+<p>Returns the one-dimensional piecewise linear interpolant to a function
+with given discrete data points (<cite>xp</cite>, <cite>fp</cite>), evaluated at <cite>x</cite>.</p>
+<dl class="docutils">
+<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd>The x-coordinates at which to evaluate the interpolated values.</dd>
+<dt>xp <span class="classifier-delimiter">:</span> <span class="classifier">1-D sequence of floats</span></dt>
+<dd>The x-coordinates of the data points, must be increasing if argument
+<cite>period</cite> is not specified. Otherwise, <cite>xp</cite> is internally sorted after
+normalizing the periodic boundaries with <code class="docutils literal notranslate"><span class="pre">xp</span> <span class="pre">=</span> <span class="pre">xp</span> <span class="pre">%</span> <span class="pre">period</span></code>.</dd>
+<dt>fp <span class="classifier-delimiter">:</span> <span class="classifier">1-D sequence of float or complex</span></dt>
+<dd>The y-coordinates of the data points, same length as <cite>xp</cite>.</dd>
+<dt>left <span class="classifier-delimiter">:</span> <span class="classifier">optional float or complex corresponding to fp</span></dt>
+<dd>Value to return for <cite>x &lt; xp[0]</cite>, default is <cite>fp[0]</cite>.</dd>
+<dt>right <span class="classifier-delimiter">:</span> <span class="classifier">optional float or complex corresponding to fp</span></dt>
+<dd>Value to return for <cite>x &gt; xp[-1]</cite>, default is <cite>fp[-1]</cite>.</dd>
+<dt>period <span class="classifier-delimiter">:</span> <span class="classifier">None or float, optional</span></dt>
+<dd><p class="first">A period for the x-coordinates. This parameter allows the proper
+interpolation of angular x-coordinates. Parameters <cite>left</cite> and <cite>right</cite>
+are ignored if <cite>period</cite> is specified.</p>
+<div class="last versionadded">
+<p><span class="versionmodified">New in version 1.10.0.</span></p>
+</div>
+</dd>
+</dl>
+<dl class="docutils">
+<dt>y <span class="classifier-delimiter">:</span> <span class="classifier">float or complex (corresponding to fp) or ndarray</span></dt>
+<dd>The interpolated values, same shape as <cite>x</cite>.</dd>
+</dl>
+<dl class="docutils">
+<dt>ValueError</dt>
+<dd>If <cite>xp</cite> and <cite>fp</cite> have different length
+If <cite>xp</cite> or <cite>fp</cite> are not 1-D sequences
+If <cite>period == 0</cite></dd>
+</dl>
+<p>Does not check that the x-coordinate sequence <cite>xp</cite> is increasing.
+If <cite>xp</cite> is not increasing, the results are nonsense.
+A simple check for increasing is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">xp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
+<span class="go">1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.72</span><span class="p">,</span> <span class="mf">3.14</span><span class="p">],</span> <span class="n">xp</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
+<span class="go">array([ 3. ,  3. ,  2.5 ,  0.56,  0. ])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">UNDEF</span> <span class="o">=</span> <span class="o">-</span><span class="mf">99.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="mf">3.14</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">UNDEF</span><span class="p">)</span>
+<span class="go">-99.0</span>
+</pre></div>
+</div>
+<p>Plot an interpolant to the sine function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yinterp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">xvals</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="go">[&lt;matplotlib.lines.Line2D object at 0x...&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xvals</span><span class="p">,</span> <span class="n">yinterp</span><span class="p">,</span> <span class="s1">&#39;-x&#39;</span><span class="p">)</span>
+<span class="go">[&lt;matplotlib.lines.Line2D object at 0x...&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Interpolation with periodic x-coordinates:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="o">-</span><span class="mi">170</span><span class="p">,</span> <span class="o">-</span><span class="mi">185</span><span class="p">,</span> <span class="mi">185</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">365</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">190</span><span class="p">,</span> <span class="o">-</span><span class="mi">190</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="mi">360</span><span class="p">)</span>
+<span class="go">array([7.5, 5., 8.75, 6.25, 3., 3.25, 3.5, 3.75])</span>
+</pre></div>
+</div>
+<p>Complex interpolation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fp</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">+</span><span class="mi">3</span><span class="n">j</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
+<span class="go">array([ 0.+1.j ,  1.+1.5j])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.p2l">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">p2l</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#p2l"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.p2l" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the many different ways of addressing an ODS path to a list of keys ([‘bla’,0,’bla’])</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> – ods location in some format</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of keys that make the ods path</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.printd">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">printd</code><span class="sig-paren">(</span><em>*objects</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#printd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.printd" title="Permalink to this definition">¶</a></dt>
+<dd><p>debug print
+environmental variable OMAS_DEBUG_TOPIC sets the topic to be printed</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.printe">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">printe</code><span class="sig-paren">(</span><em>*objects</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#printe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.printe" title="Permalink to this definition">¶</a></dt>
+<dd><p>print to stderr</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.printw">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">printw</code><span class="sig-paren">(</span><em>*objects</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#omas.omas_utils.printw" title="Permalink to this definition">¶</a></dt>
+<dd><p>print to stderr</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.recursive_encoder">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">recursive_encoder</code><span class="sig-paren">(</span><em>me</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#recursive_encoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.recursive_encoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Traverse dictionaries and list to convert entries strings as appropriate</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>me</strong> – root of the dictionary to traverse</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">root of the dictionary</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.recursive_glob">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">recursive_glob</code><span class="sig-paren">(</span><em>pattern=u'*'</em>, <em>rootdir=u'.'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#recursive_glob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.recursive_glob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search recursively for files matching a specified pattern within a rootdir</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pattern</strong> – glob pattern to match</li>
+<li><strong>rootdir</strong> – top level directory to search under</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.recursive_interpreter">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">recursive_interpreter</code><span class="sig-paren">(</span><em>me</em>, <em>interpret_method=&lt;function literal_eval&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#recursive_interpreter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.recursive_interpreter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Traverse dictionaries and list to convert strings to int/float when appropriate</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>me</strong> – root of the dictionary to traverse</li>
+<li><strong>interpret_method</strong> – method used for conversion (ast.literal_eval by default)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">root of the dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.remove_parentheses">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">remove_parentheses</code><span class="sig-paren">(</span><em>inv</em>, <em>replace_with=u''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#remove_parentheses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.remove_parentheses" title="Permalink to this definition">¶</a></dt>
+<dd><p>function used to remove/replace top-level matching parenthesis from a string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>inv</strong> – input string</li>
+<li><strong>replace_with</strong> – string to replace matching parenthesis with</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">input string without first set of matching parentheses</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.sanitize_version_number">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">sanitize_version_number</code><span class="sig-paren">(</span><em>version</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#sanitize_version_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.sanitize_version_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes common non-numerical characters from version numbers obtained from git tags, such as ‘_rc’, etc.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.trim_common_path">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">trim_common_path</code><span class="sig-paren">(</span><em>p1</em>, <em>p2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#trim_common_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.trim_common_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>return paths in lists format trimmed of the common first path between paths p1 and p2</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>p1</strong> – ODS path</li>
+<li><strong>p2</strong> – ODS path</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">paths in list format trimmed of common part</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.u2o">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">u2o</code><span class="sig-paren">(</span><em>upath</em>, <em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#u2o"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.u2o" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces <cite>:</cite> and integers in <cite>upath</cite> with ‘:’ and integers from in <cite>path</cite>
+e.g. uo2(‘a.:.b.:.c.1.d.1.e’,’f.:.g.1.h.1.i.:.k’)) becomes (‘bla.1.hello.2.bla’)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>upath</strong> – universal ODS path</li>
+<li><strong>path</strong> – ODS path</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">filled in ODS path</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.underline_last">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">underline_last</code><span class="sig-paren">(</span><em>text</em>, <em>offset=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_utils.html#underline_last"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.underline_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function to underline the last part of a path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>text</strong> – text to underline</li>
+<li><strong>offset</strong> – add offset to underling</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">original text with underline on a new line</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017-2019 O. Meneghini and collaborators.<br/>
+      Last updated on Nov 19, 2019.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+omas.equilibrium\_transpose\_RZ
+===============================
+
+.. currentmodule:: omas
+
+.. autofunction:: equilibrium_transpose_RZ

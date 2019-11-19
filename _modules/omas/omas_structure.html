@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>omas.omas_structure &#8212; OMAS</title>
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html"><img height=40, src="../../_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../how.html">Concept</a></li>
+                <li><a href="../../auto_examples/index.html">Examples</a></li>
+                <li><a href="../../install.html">Installation</a></li>
+                <li><a href="../../iter.html">ITER</a></li>
+                <li><a href="../../omfit.html">OMFIT</a></li>
+                <li><a href="../../schema.html">Data schema</a></li>
+                <li><a href="../../code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <h1>Source code for omas.omas_structure</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;functions for handling IMAS XML data dictionaries</span>
+
+<span class="sd">-------</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">.omas_utils</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># generation of the imas structure json files</span>
+<span class="c1"># IDS&#39;s XML documentation can be found where IMAS is installed at: $IMAS_PREFIX/share/doc/imas/html_documentation.html</span>
+<span class="c1"># --------------------------------------------</span>
+<div class="viewcode-block" id="generate_xml_schemas"><a class="viewcode-back" href="../../code/omas.omas_structure.html#omas.generate_xml_schemas">[docs]</a><span class="k">def</span> <span class="nf">generate_xml_schemas</span><span class="p">(</span><span class="n">imas_version</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate IMAS IDSDef.xml files by:</span>
+<span class="sd">     1. clone the IMAS data-dictionary repository (access to git.iter.org required)</span>
+<span class="sd">     2. download the Saxon XSLT and XQuery Processor</span>
+<span class="sd">     3. generate IDSDef.xml in imas_structures folder</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">subprocess</span>
+
+    <span class="n">saxon_version</span> <span class="o">=</span> <span class="s1">&#39;SaxonHE9-9-1-4J&#39;</span>
+    <span class="n">saxon_major_version</span> <span class="o">=</span> <span class="s1">&#39;9.&#39;</span> <span class="o">+</span> <span class="n">saxon_version</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># clone the IMAS data-dictionary repository</span>
+    <span class="n">dd_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">imas_json_dir</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">,</span> <span class="s1">&#39;data-dictionary&#39;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dd_folder</span><span class="p">):</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+            <span class="s1">&#39;cd </span><span class="si">%s</span><span class="s1"> ; git clone ssh://git@git.iter.org/imas/data-dictionary.git&#39;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">imas_json_dir</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">]),</span>
+            <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># download Saxon</span>
+    <span class="n">sax_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">imas_json_dir</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">,</span> <span class="n">saxon_version</span><span class="p">])</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">sax_folder</span><span class="p">):</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        cd </span><span class="si">{install_dir}</span><span class="s2"></span>
+<span class="s2">        curl https://iweb.dl.sourceforge.net/project/saxon/Saxon-HE/9.9/</span><span class="si">{saxon_version}</span><span class="s2">.zip &gt; </span><span class="si">{saxon_version}</span><span class="s2">.zip</span>
+<span class="s2">        unzip -d </span><span class="si">{saxon_version}</span><span class="s2"> </span><span class="si">{saxon_version}</span><span class="s2">.zip</span>
+<span class="s2">        rm </span><span class="si">{saxon_version}</span><span class="s2">.zip&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">install_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">imas_json_dir</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">]),</span> <span class="n">saxon_major_version</span><span class="o">=</span><span class="n">saxon_major_version</span><span class="p">,</span> <span class="n">saxon_version</span><span class="o">=</span><span class="n">saxon_version</span><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+
+    <span class="c1"># fetch data structure updates</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    cd </span><span class="si">{dd_folder}</span><span class="s2"></span>
+<span class="s2">    git fetch</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dd_folder</span><span class="o">=</span><span class="n">dd_folder</span><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+
+    <span class="c1"># find IMAS data-dictionary tags</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">b2s</span><span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="s1">&#39;cd </span><span class="si">%s</span><span class="s1">;git tag&#39;</span> <span class="o">%</span> <span class="n">dd_folder</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;3.&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+    <span class="c1"># add development branch at the beginning of list of tags</span>
+    <span class="n">tags</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;develop/3&#39;</span><span class="p">)</span>
+    <span class="n">imas_versions</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+        <span class="n">imas_versions</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">imas_version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">imas_versions</span>
+
+    <span class="c1"># generate IDSDef.xml files for given imas_version</span>
+    <span class="n">_imas_version</span> <span class="o">=</span> <span class="n">imas_versions</span><span class="p">[</span><span class="n">imas_version</span><span class="p">]</span>
+    <span class="n">executable</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">export CLASSPATH=</span><span class="si">{imas_json_dir}</span><span class="s2">/../</span><span class="si">{saxon_version}</span><span class="s2">/saxon9he.jar;</span>
+<span class="s2">cd </span><span class="si">{dd_folder}</span><span class="s2"></span>
+<span class="s2">git checkout </span><span class="si">{tag}</span><span class="s2"></span>
+<span class="s2">git pull</span>
+<span class="s2">export JAVA_HOME=$(dirname $(dirname `which java`))</span>
+<span class="s2">make clean</span>
+<span class="s2">make</span>
+<span class="s2">rm -rf </span><span class="si">{imas_json_dir}</span><span class="s2">/</span><span class="si">{_imas_version}</span><span class="s2">/</span>
+<span class="s2">mkdir </span><span class="si">{imas_json_dir}</span><span class="s2">/</span><span class="si">{_imas_version}</span><span class="s2">/</span>
+<span class="s2">cp IDSDef.xml </span><span class="si">{imas_json_dir}</span><span class="s2">/</span><span class="si">{_imas_version}</span><span class="s2">/</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="n">imas_version</span><span class="p">,</span> <span class="n">_imas_version</span><span class="o">=</span><span class="n">_imas_version</span><span class="p">,</span> <span class="n">imas_json_dir</span><span class="o">=</span><span class="n">imas_json_dir</span><span class="p">,</span> <span class="n">dd_folder</span><span class="o">=</span><span class="n">dd_folder</span><span class="p">,</span> <span class="n">saxon_version</span><span class="o">=</span><span class="n">saxon_version</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">executable</span><span class="p">)</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">executable</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="create_json_structure"><a class="viewcode-back" href="../../code/omas.create_json_structure.html#omas.create_json_structure">[docs]</a><span class="k">def</span> <span class="nf">create_json_structure</span><span class="p">(</span><span class="n">imas_version</span><span class="o">=</span><span class="n">omas_rcparams</span><span class="p">[</span><span class="s1">&#39;default_imas_version&#39;</span><span class="p">]):</span>
+    <span class="kn">import</span> <span class="nn">xmltodict</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">imas_json_dir</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">imas_versions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">imas_version</span><span class="p">,</span> <span class="n">imas_version</span><span class="p">)</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;IDSDef.xml&#39;</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">xmltodict</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">imas_json_dir</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">imas_versions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">imas_version</span><span class="p">,</span> <span class="n">imas_version</span><span class="p">)</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;*.json&#39;</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Remove &#39;</span> <span class="o">+</span> <span class="n">file</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process_path</span><span class="p">(</span><span class="n">inv</span><span class="p">):</span>
+        <span class="n">inv</span> <span class="o">=</span> <span class="n">inv</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+        <span class="n">inv</span> <span class="o">=</span> <span class="n">inv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; OR &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">inv</span> <span class="o">=</span> <span class="n">remove_parentheses</span><span class="p">(</span><span class="n">inv</span><span class="p">,</span> <span class="s1">&#39;[:]&#39;</span><span class="p">)</span>
+        <span class="n">inv</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;\[:\]$&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">inv</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">inv</span>
+
+    <span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="n">hout</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">fout</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="n">me</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">me</span><span class="p">)</span>
+        <span class="n">hout_propagate</span> <span class="o">=</span> <span class="n">hout</span>
+        <span class="n">path_propagate</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;@structure_reference&#39;</span> <span class="ow">in</span> <span class="n">me</span> <span class="ow">and</span> <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@structure_reference&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;self&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">hout</span><span class="p">,</span> <span class="n">fout</span>
+
+        <span class="k">if</span> <span class="s1">&#39;@name&#39;</span> <span class="ow">in</span> <span class="n">me</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@name&#39;</span><span class="p">]</span>
+            <span class="n">path_propagate</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">hout_propagate</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">hout</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">hout_propagate</span>
+            <span class="c1"># paths</span>
+            <span class="k">if</span> <span class="s1">&#39;@path_doc&#39;</span> <span class="ow">in</span> <span class="n">me</span><span class="p">:</span>
+                <span class="n">fname</span> <span class="o">=</span> <span class="n">path_propagate</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@path_doc&#39;</span><span class="p">]</span>
+                <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@full_path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">path_propagate</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@path_doc&#39;</span><span class="p">]</span>
+                <span class="k">del</span> <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@path_doc&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fname</span> <span class="o">=</span> <span class="n">path_propagate</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@full_path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">path_propagate</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s1">&#39;@path&#39;</span> <span class="ow">in</span> <span class="n">me</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@path&#39;</span><span class="p">]</span>
+            <span class="c1"># coordinates</span>
+            <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">me</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;@coordinate&#39;</span><span class="p">)]:</span>
+                <span class="k">if</span> <span class="s1">&#39;...&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">me</span><span class="p">[</span><span class="n">coord</span><span class="p">]:</span>
+                    <span class="n">me</span><span class="p">[</span><span class="n">coord</span><span class="p">]</span> <span class="o">=</span> <span class="n">path_propagate</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">me</span><span class="p">[</span><span class="n">coord</span><span class="p">]</span>
+            <span class="c1"># identifiers documentation</span>
+            <span class="k">if</span> <span class="s1">&#39;@doc_identifier&#39;</span> <span class="ow">in</span> <span class="n">me</span><span class="p">:</span>
+                <span class="n">doc_id</span> <span class="o">=</span> <span class="n">xmltodict</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">imas_json_dir</span> <span class="o">+</span> <span class="s1">&#39;/../data-dictionary/&#39;</span> <span class="o">+</span> <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@doc_identifier&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+                <span class="n">hlp</span> <span class="o">=</span> <span class="n">doc_id</span><span class="p">[</span><span class="s1">&#39;constants&#39;</span><span class="p">][</span><span class="s1">&#39;int&#39;</span><span class="p">]</span>
+                <span class="n">doc</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">hlp</span><span class="p">:</span>
+                    <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">) </span><span class="si">%s</span><span class="s1"> : </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;#text&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;@name&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;@description&#39;</span><span class="p">]))</span>
+                <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@documentation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@documentation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">process_path</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+            <span class="n">fout</span><span class="p">[</span><span class="n">fname</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">keys</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">me</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">me</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="s1">&#39;@units&#39;</span> <span class="ow">in</span> <span class="n">me</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">fname</span> <span class="o">==</span> <span class="s1">&#39;equilibrium.time_slice[:].constraints.q&#39;</span><span class="p">:</span>  <span class="c1"># bug fix for v3.18.0</span>
+                <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@units&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span>
+            <span class="k">if</span> <span class="n">fname</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;equilibrium.time_slice[:].profiles_1d.geometric_axis.r&#39;</span><span class="p">,</span> <span class="s1">&#39;equilibrium.time_slice[:].profiles_1d.geometric_axis.z&#39;</span><span class="p">]:</span>
+                <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@coordinate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;equilibrium.time_slice[:].profiles_1d.psi&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@units&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;as_parent&#39;</span><span class="p">,</span> <span class="s1">&#39;as parent&#39;</span><span class="p">,</span> <span class="s1">&#39;as_parent_level_2&#39;</span><span class="p">]:</span>
+                <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@units&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent</span><span class="p">[</span><span class="s1">&#39;units&#39;</span><span class="p">]</span>
+            <span class="n">parent</span><span class="p">[</span><span class="s1">&#39;units&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@units&#39;</span><span class="p">]</span>
+
+        <span class="c1"># children inherit lifecycle status from parent</span>
+        <span class="k">if</span> <span class="s1">&#39;@lifecycle_status&#39;</span> <span class="ow">in</span> <span class="n">me</span><span class="p">:</span>
+            <span class="n">parent</span><span class="p">[</span><span class="s1">&#39;lifecycle_status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@lifecycle_status&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">parent</span><span class="p">[</span><span class="s1">&#39;lifecycle_status&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">me</span><span class="p">[</span><span class="s1">&#39;@lifecycle_status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent</span><span class="p">[</span><span class="s1">&#39;lifecycle_status&#39;</span><span class="p">]</span>
+            <span class="n">keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;@lifecycle_status&#39;</span><span class="p">)</span>
+
+        <span class="n">is_leaf</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">kid</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">me</span><span class="p">[</span><span class="n">kid</span><span class="p">],</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+                <span class="n">is_leaf</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">traverse</span><span class="p">(</span><span class="n">me</span><span class="p">[</span><span class="n">kid</span><span class="p">],</span> <span class="n">hout_propagate</span><span class="p">,</span> <span class="n">path_propagate</span><span class="p">,</span> <span class="n">fout</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">kid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;@name&#39;</span><span class="p">,</span> <span class="s1">&#39;@xmlns:fn&#39;</span><span class="p">]:</span>
+                <span class="n">hout_propagate</span><span class="p">[</span><span class="n">kid</span><span class="p">]</span> <span class="o">=</span> <span class="n">me</span><span class="p">[</span><span class="n">kid</span><span class="p">]</span>
+                <span class="n">fout</span><span class="p">[</span><span class="n">fname</span><span class="p">][</span><span class="n">kid</span><span class="p">]</span> <span class="o">=</span> <span class="n">me</span><span class="p">[</span><span class="n">kid</span><span class="p">]</span>
+
+                <span class="c1"># if is_leaf:</span>
+                <span class="c1"># print(path_propagate)</span>
+
+        <span class="k">return</span> <span class="n">hout</span><span class="p">,</span> <span class="n">fout</span>
+
+    <span class="n">parent</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">parent</span><span class="p">[</span><span class="s1">&#39;units&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;?&#39;</span>
+    <span class="n">parent</span><span class="p">[</span><span class="s1">&#39;lifecycle_status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">hout</span><span class="p">,</span> <span class="n">fout</span> <span class="o">=</span> <span class="n">traverse</span><span class="p">(</span><span class="n">me</span><span class="o">=</span><span class="n">tmp</span><span class="p">,</span> <span class="n">hout</span><span class="o">=</span><span class="p">{},</span> <span class="n">path</span><span class="o">=</span><span class="p">[],</span> <span class="n">fout</span><span class="o">=</span><span class="p">{},</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+
+    <span class="c1"># format conversions</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">fout</span><span class="p">):</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())):</span>
+            <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;AosParent_relative&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">key</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;_same_as&#39;</span><span class="p">):</span>
+                <span class="k">del</span> <span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">key</span> <span class="o">!=</span> <span class="s1">&#39;@coordinates&#39;</span> <span class="ow">and</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;@coordinate&#39;</span><span class="p">):</span>
+                <span class="n">coords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
+                <span class="k">del</span> <span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;@path&#39;</span><span class="p">):</span>
+                <span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">process_path</span><span class="p">(</span><span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
+            <span class="c1"># # this is a check for duplicated coordinates, which it is not an error per se</span>
+            <span class="c1"># if len(numpy.unique(list(filter(lambda x: not x.startswith(&#39;1...&#39;), coords)))) != len(list(filter(lambda x: not x.startswith(&#39;1...&#39;), coords))):</span>
+            <span class="c1">#     printe(&#39;%s -X-&gt; %s&#39; % (item, coords))</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">process_path</span><span class="p">,</span> <span class="n">coords</span><span class="p">))</span>
+            <span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="s1">&#39;@coordinates&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">coords</span>
+
+    <span class="c1"># deal with cross-referenced coordinates</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">fout</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;@coordinates&#39;</span> <span class="ow">in</span> <span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">]:</span>
+            <span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="s1">&#39;@coordinates&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;^.*\.IDS:&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="s1">&#39;@coordinates&#39;</span><span class="p">]))</span>
+
+    <span class="c1"># check dimensions</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">fout</span><span class="p">):</span>
+        <span class="n">coord</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="s1">&#39;@coordinates&#39;</span> <span class="ow">in</span> <span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="s1">&#39;@coordinates&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="s1">&#39;...&#39;</span> <span class="ow">in</span> <span class="n">coord</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="n">coord</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fout</span><span class="p">:</span>
+                    <span class="n">printe</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> --&gt; </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">coord</span><span class="p">))</span>
+
+    <span class="c1"># cleanup entries</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">fout</span><span class="p">):</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;^@&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">keys</span><span class="p">))</span>
+        <span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">values</span><span class="p">))</span>
+
+    <span class="c1"># break into pieces</span>
+    <span class="n">hout</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">fout</span><span class="p">):</span>
+        <span class="c1">#    if re.findall(&#39;(_error_upper|_error_lower|_error_index)$&#39;, item):</span>
+        <span class="c1">#        continue</span>
+        <span class="n">ds</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">hout</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="p">{})[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="n">fout</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
+
+    <span class="c1"># additional data structures</span>
+    <span class="n">hout</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">add_datastructures</span><span class="p">)</span>
+
+    <span class="c1"># prepare directory structure</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">imas_json_dir</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">imas_versions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">imas_version</span><span class="p">,</span> <span class="n">imas_version</span><span class="p">)):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">imas_json_dir</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">imas_versions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">imas_version</span><span class="p">,</span> <span class="n">imas_version</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">imas_json_dir</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">imas_versions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">imas_version</span><span class="p">,</span> <span class="n">imas_version</span><span class="p">)</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;*.json&#39;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="c1"># deploy imas structures as json</span>
+    <span class="k">for</span> <span class="n">structure</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">hout</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">structure</span> <span class="o">==</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">imas_json_dir</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">imas_versions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">imas_version</span><span class="p">,</span> <span class="n">imas_version</span><span class="p">)</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">structure</span> <span class="o">+</span> <span class="s1">&#39;.json&#39;</span><span class="p">)</span>
+        <span class="n">dump_string</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">hout</span><span class="p">[</span><span class="n">structure</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="n">json_dumper</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">),</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">open</span><span class="p">(</span><span class="n">imas_json_dir</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">imas_versions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">imas_version</span><span class="p">,</span> <span class="n">imas_version</span><span class="p">)</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">structure</span> <span class="o">+</span> <span class="s1">&#39;.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dump_string</span><span class="p">)</span>
+
+    <span class="c1"># generate coordinates cache file</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">extract_coordinates</span><span class="p">(</span><span class="n">imas_version</span><span class="o">=</span><span class="n">imas_version</span><span class="p">)</span>
+    <span class="n">dump_string</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">json_dumper</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">),</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">open</span><span class="p">(</span><span class="n">imas_json_dir</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">imas_versions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">imas_version</span><span class="p">,</span> <span class="n">imas_version</span><span class="p">)</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;_coordinates.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dump_string</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_html_documentation"><a class="viewcode-back" href="../../code/omas.create_html_documentation.html#omas.create_html_documentation">[docs]</a><span class="k">def</span> <span class="nf">create_html_documentation</span><span class="p">(</span><span class="n">imas_version</span><span class="o">=</span><span class="n">omas_rcparams</span><span class="p">[</span><span class="s1">&#39;default_imas_version&#39;</span><span class="p">]):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">imas_json_dir</span><span class="p">,</span> <span class="n">imas_versions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">imas_version</span><span class="p">,</span> <span class="n">imas_version</span><span class="p">),</span> <span class="s1">&#39;omas_doc.html&#39;</span><span class="p">]))</span>
+
+    <span class="n">table_header</span> <span class="o">=</span> <span class="s2">&quot;&lt;table border=1, width=&#39;100%&#39;&gt;&quot;</span>
+    <span class="n">sub_table_header</span> <span class="o">=</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span> \
+                       <span class="s1">&#39;&lt;th style=&quot;width:25%&quot;&gt;Path&lt;/th&gt;&#39;</span> \
+                       <span class="s1">&#39;&lt;th style=&quot;width:25%&quot;&gt;Dimensions&lt;/th&gt;&#39;</span> \
+                       <span class="s1">&#39;&lt;th&gt;Type&lt;/th&gt;&#39;</span> \
+                       <span class="s1">&#39;&lt;th&gt;Units&lt;/th&gt;&#39;</span> \
+                       <span class="s1">&#39;&lt;th&gt;Description&lt;/th&gt;&#39;</span> \
+                       <span class="s1">&#39;&lt;/tr&gt;&#39;</span>
+
+    <span class="n">column_style</span> <span class="o">=</span> <span class="s1">&#39;style=&quot;word-wrap:break-word;word-break:break-all&quot;&#39;</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">structure_file</span> <span class="ow">in</span> <span class="n">list_structures</span><span class="p">(</span><span class="n">imas_version</span><span class="o">=</span><span class="n">imas_version</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Adding to html documentation: &#39;</span> <span class="o">+</span> <span class="n">structure_file</span><span class="p">)</span>
+        <span class="c1"># load structure information</span>
+        <span class="n">structure</span> <span class="o">=</span> <span class="n">load_structure</span><span class="p">(</span><span class="n">structure_file</span><span class="p">,</span> <span class="n">imas_version</span><span class="o">=</span><span class="n">imas_version</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># idenfity coordinates in the structure</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">structure</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;coordinates&#39;</span> <span class="ow">in</span> <span class="n">structure</span><span class="p">[</span><span class="n">item</span><span class="p">]:</span>
+                <span class="n">coords</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">structure</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="s1">&#39;coordinates&#39;</span><span class="p">])</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;...&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">,</span> <span class="nb">set</span><span class="p">(</span><span class="n">coords</span><span class="p">)))</span>
+        <span class="c1"># generate output</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;!-- </span><span class="si">%s</span><span class="s1"> --&gt;&#39;</span> <span class="o">%</span> <span class="n">structure_file</span><span class="p">)</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_header</span><span class="p">)</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub_table_header</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">structure</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">item</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;_error_index&#39;</span><span class="p">,</span> <span class="s1">&#39;_error_lower&#39;</span><span class="p">,</span> <span class="s1">&#39;_error_upper&#39;</span><span class="p">]]):</span>
+                <span class="c1"># uncertain quantities</span>
+                <span class="n">is_uncertain</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">if</span> <span class="n">item</span> <span class="o">+</span> <span class="s1">&#39;_error_upper&#39;</span> <span class="ow">in</span> <span class="n">structure</span><span class="p">:</span>
+                    <span class="n">is_uncertain</span> <span class="o">=</span> <span class="s1">&#39; (uncertain)&#39;</span>
+                <span class="c1"># lifecycle status</span>
+                <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">if</span> <span class="s1">&#39;lifecycle_status&#39;</span> <span class="ow">in</span> <span class="n">structure</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="ow">and</span> <span class="n">structure</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="s1">&#39;lifecycle_status&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;active&#39;</span><span class="p">]:</span>
+                    <span class="n">color_mapper</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;obsolescent&#39;</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">}</span>
+                    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;&lt;/p&gt;&lt;p&gt;&lt;font color=&quot;</span><span class="si">%s</span><span class="s1">&quot;&gt;(</span><span class="si">%s</span><span class="s1">)&lt;/font&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">color_mapper</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">structure</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="s1">&#39;lifecycle_status&#39;</span><span class="p">],</span> <span class="s1">&#39;orange&#39;</span><span class="p">),</span> <span class="n">structure</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="s1">&#39;lifecycle_status&#39;</span><span class="p">])</span>
+                <span class="c1"># highlight entries that are a coordinate</span>
+                <span class="n">item_with_coordinate_highlight</span> <span class="o">=</span> <span class="n">item</span>
+                <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">:</span>
+                    <span class="n">item_with_coordinate_highlight</span> <span class="o">=</span> <span class="s1">&#39;&lt;strong&gt;</span><span class="si">%s</span><span class="s1">&lt;/strong&gt;&#39;</span> <span class="o">%</span> <span class="n">item</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="s1">&#39;&lt;tr&gt;&#39;</span>
+                        <span class="s1">&#39;&lt;td </span><span class="si">{column_style}</span><span class="s1">&gt;&lt;p&gt;</span><span class="si">{item_with_coordinate_highlight}{status}</span><span class="s1">&lt;/p&gt;&lt;/td&gt;&#39;</span> \
+                        <span class="s1">&#39;&lt;td </span><span class="si">{column_style}</span><span class="s1">&gt;&lt;p&gt;</span><span class="si">{coordinates}</span><span class="s1">&lt;/p&gt;&lt;/td&gt;&#39;</span> \
+                        <span class="s1">&#39;&lt;td&gt;&lt;p&gt;</span><span class="si">{data_type}</span><span class="s1">&lt;/p&gt;&lt;/td&gt;&#39;</span> \
+                        <span class="s1">&#39;&lt;td&gt;&lt;p&gt;</span><span class="si">{units}</span><span class="s1">&lt;/p&gt;&lt;/td&gt;&#39;</span> \
+                        <span class="s1">&#39;&lt;td&gt;&lt;p&gt;</span><span class="si">{description}</span><span class="s1">&lt;/p&gt;&lt;/td&gt;&#39;</span>
+                        <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">item_with_coordinate_highlight</span><span class="o">=</span><span class="n">item_with_coordinate_highlight</span><span class="p">,</span>
+                            <span class="n">coordinates</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;\[\]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[</span><span class="se">\&#39;\&quot;</span><span class="s1">]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;,&lt;br&gt;&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
+                                <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">structure</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;coordinates&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))))))),</span>
+                            <span class="n">data_type</span><span class="o">=</span><span class="n">structure</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data_type&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">is_uncertain</span><span class="p">,</span>
+                            <span class="n">units</span><span class="o">=</span><span class="n">structure</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;units&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+                            <span class="n">description</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">,</span> <span class="n">structure</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;documentation&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)),</span>
+                            <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span>
+                            <span class="n">column_style</span><span class="o">=</span><span class="n">column_style</span>
+                        <span class="p">))</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">printe</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                    <span class="k">raise</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;/table&gt;&#39;</span><span class="p">)</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;/table&gt;&lt;p&gt;&lt;/p&gt;&#39;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="extract_coordinates"><a class="viewcode-back" href="../../code/omas.omas_structure.html#omas.extract_coordinates">[docs]</a><span class="k">def</span> <span class="nf">extract_coordinates</span><span class="p">(</span><span class="n">imas_version</span><span class="o">=</span><span class="n">omas_rcparams</span><span class="p">[</span><span class="s1">&#39;default_imas_version&#39;</span><span class="p">]):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    return list of strings with coordinates across all structures</span>
+
+<span class="sd">    :param imas_version: imas version</span>
+
+<span class="sd">    :return: list with coordinate</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">from</span> <span class="nn">omas.omas_utils</span> <span class="k">import</span> <span class="n">list_structures</span>
+    <span class="kn">from</span> <span class="nn">omas.omas_utils</span> <span class="k">import</span> <span class="n">load_structure</span>
+
+    <span class="n">omas_coordinates</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">structure</span> <span class="ow">in</span> <span class="n">list_structures</span><span class="p">(</span><span class="n">imas_version</span><span class="o">=</span><span class="n">imas_version</span><span class="p">):</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">load_structure</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">imas_version</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">tmp</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;coordinates&#39;</span> <span class="ow">in</span> <span class="n">tmp</span><span class="p">[</span><span class="n">item</span><span class="p">]:</span>
+                <span class="n">coords</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">i2o</span><span class="p">,</span> <span class="n">tmp</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="s1">&#39;coordinates&#39;</span><span class="p">]))</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;...&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">,</span> <span class="nb">set</span><span class="p">(</span><span class="n">coords</span><span class="p">)))</span>
+        <span class="n">omas_coordinates</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">omas_coordinates</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="symlink_imas_structure_versions"><a class="viewcode-back" href="../../code/omas.symlink_imas_structure_versions.html#omas.symlink_imas_structure_versions">[docs]</a><span class="k">def</span> <span class="nf">symlink_imas_structure_versions</span><span class="p">(</span><span class="n">test</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Generate symbolic links in imas_structures so that no files are added when there are no changes between IDSs</span>
+
+<span class="sd">    :param test: whether to actually apply symlink commands</span>
+
+<span class="sd">    :param verbose: wheter to print to screen structures strides</span>
+
+<span class="sd">    :returns: dictionary with structure stides per IDS</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="kn">import</span> <span class="nn">subprocess</span>
+    <span class="kn">from</span> <span class="nn">pprint</span> <span class="k">import</span> <span class="n">pprint</span>
+    <span class="kn">from</span> <span class="nn">omas.omas_setup</span> <span class="k">import</span> <span class="n">IMAS_versions</span>
+    <span class="kn">from</span> <span class="nn">omas.omas_utils</span> <span class="k">import</span> <span class="n">dict_structures</span><span class="p">,</span> <span class="n">imas_json_dir</span>
+
+    <span class="n">imas_versions</span> <span class="o">=</span> <span class="n">IMAS_versions</span><span class="p">(</span><span class="s1">&#39;tagged&#39;</span><span class="p">)</span>
+
+    <span class="c1"># check if two files are identical</span>
+    <span class="k">def</span> <span class="nf">same_ds</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">as</span> <span class="n">a</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">as</span> <span class="n">b</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="o">==</span> <span class="n">b</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="c1"># see when DS files have changed</span>
+    <span class="n">structures_strides</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">previous_tag_structures</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">imas_versions</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+        <span class="n">this_tag_structures</span> <span class="o">=</span> <span class="n">dict_structures</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">this_tag_structures</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ds</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">structures_strides</span><span class="p">:</span>
+                <span class="n">structures_strides</span><span class="p">[</span><span class="n">ds</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[</span><span class="n">version</span><span class="p">]]</span>
+            <span class="k">elif</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">previous_tag_structures</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">same_ds</span><span class="p">(</span><span class="n">previous_tag_structures</span><span class="p">[</span><span class="n">ds</span><span class="p">],</span> <span class="n">this_tag_structures</span><span class="p">[</span><span class="n">ds</span><span class="p">]):</span>
+                    <span class="n">structures_strides</span><span class="p">[</span><span class="n">ds</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">structures_strides</span><span class="p">[</span><span class="n">ds</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">version</span><span class="p">])</span>
+        <span class="n">previous_tag_structures</span> <span class="o">=</span> <span class="n">this_tag_structures</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="n">pprint</span><span class="p">(</span><span class="n">structures_strides</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">test</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">structures_strides</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">stride</span> <span class="ow">in</span> <span class="n">structures_strides</span><span class="p">[</span><span class="n">ds</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stride</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="n">stride</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                        <span class="nb">dir</span> <span class="o">=</span> <span class="n">imas_json_dir</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
+                        <span class="n">this</span> <span class="o">=</span> <span class="n">dict_structures</span><span class="p">(</span><span class="n">stride</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])[</span><span class="n">ds</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="nb">dir</span><span class="p">):]</span>
+                        <span class="n">prev</span> <span class="o">=</span> <span class="n">dict_structures</span><span class="p">(</span><span class="n">version</span><span class="p">)[</span><span class="n">ds</span><span class="p">]</span>
+                        <span class="n">command</span> <span class="o">=</span> <span class="s1">&#39;cd </span><span class="si">%s</span><span class="s1">; ln -s -f ../</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">prev</span><span class="p">),</span> <span class="n">this</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">prev</span><span class="p">))</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+                        <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">structures_strides</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017-2019 O. Meneghini and collaborators.<br/>
+      Last updated on Nov 19, 2019.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

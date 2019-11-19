@@ -1,0 +1,6 @@
+omas.core\_profiles\_zeff
+=========================
+
+.. currentmodule:: omas
+
+.. autofunction:: core_profiles_zeff

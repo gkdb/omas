@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>omas.omas_sample &#8212; OMAS</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img height=40, src="../_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../how.html">Concept</a></li>
+                <li><a href="../auto_examples/index.html">Examples</a></li>
+                <li><a href="../install.html">Installation</a></li>
+                <li><a href="../iter.html">ITER</a></li>
+                <li><a href="../omfit.html">OMFIT</a></li>
+                <li><a href="../schema.html">Data schema</a></li>
+                <li><a href="../code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">omas.omas_sample</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <div class="section" id="module-omas.omas_sample">
+<span id="omas-omas-sample"></span><h1>omas.omas_sample<a class="headerlink" href="#module-omas.omas_sample" title="Permalink to this headline">¶</a></h1>
+<p>sample ODS methods and utilities</p>
+<hr class="docutils" />
+<p class="rubric">Functions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_to_ODS</span></code>(f)</td>
+<td>anything wrapped here will be available as a ODS method with name ‘<a href="#id1"><span class="problematic" id="id2">sample_</span></a>’+f.__name__</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_sample.bolometer" title="omas.omas_sample.bolometer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bolometer</span></code></a>(ods[,&nbsp;nc])</td>
+<td>Adds some FAKE bolometer chord locations so that the overlay plot will work in tests.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_sample.charge_exchange" title="omas.omas_sample.charge_exchange"><code class="xref py py-obj docutils literal notranslate"><span class="pre">charge_exchange</span></code></a>(ods[,&nbsp;nc])</td>
+<td>Adds some FAKE CER channel locations so that the overlay plot will work in tests.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_sample.core_profiles" title="omas.omas_sample.core_profiles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core_profiles</span></code></a>(ods[,&nbsp;time_index,&nbsp;nx,&nbsp;…])</td>
+<td>Add sample core_profiles data</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">dataset_description</span></code>(ods)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_sample.equilibrium" title="omas.omas_sample.equilibrium"><code class="xref py py-obj docutils literal notranslate"><span class="pre">equilibrium</span></code></a>(ods[,&nbsp;time_index,&nbsp;…])</td>
+<td>Add sample equilibrium data</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_sample.gas_injection" title="omas.omas_sample.gas_injection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gas_injection</span></code></a>(ods)</td>
+<td>Adds some FAKE gas injection locations so that the overlay plot will work in tests.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_sample.interferometer" title="omas.omas_sample.interferometer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interferometer</span></code></a>(ods)</td>
+<td>Adds some FAKE interferometer locations so that the overlay plot will work in tests.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_sample.magnetics" title="omas.omas_sample.magnetics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">magnetics</span></code></a>(ods)</td>
+<td>Adds some FAKE magnetic probe locations so that the overlay plot will work in tests.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">ods_sample</span></code>()</td>
+<td>returns an ODS populated with all of the samples</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#omas.omas_sample.pf_active" title="omas.omas_sample.pf_active"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pf_active</span></code></a>(ods[,&nbsp;nc_weird,&nbsp;nc_undefined])</td>
+<td>Adds some FAKE active PF coil locations so that the overlay plot will work in tests.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#omas.omas_sample.thomson_scattering" title="omas.omas_sample.thomson_scattering"><code class="xref py py-obj docutils literal notranslate"><span class="pre">thomson_scattering</span></code></a>(ods[,&nbsp;nc])</td>
+<td>Adds some FAKE Thomson scattering channel locations so that the overlay plot will work in tests.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="omas.omas_sample.equilibrium">
+<code class="descclassname">omas.omas_sample.</code><code class="descname">equilibrium</code><span class="sig-paren">(</span><em>ods</em>, <em>time_index=0</em>, <em>include_profiles=True</em>, <em>include_phi=True</em>, <em>include_wall=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_sample.html#equilibrium"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_sample.equilibrium" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add sample equilibrium data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ods</strong> – ODS instance</li>
+<li><strong>time_index</strong> – int
+Under which time index should fake equilibrium data be loaded?</li>
+<li><strong>include_profiles</strong> – bool
+Include 1D profiles of pressure, q, p’, FF’</li>
+<li><strong>include_phi</strong> – bool
+Include 1D and 2D profiles of phi (toroidal flux, for calculating rho)</li>
+<li><strong>include_wall</strong> – bool
+Include the first wall</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">ODS instance with equilibrium data added
+Since the original is modified, it is not necessary to catch the return, but it may be convenient to do so in
+some contexts. If you do not want the original to be modified, deepcopy it first.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_sample.core_profiles">
+<code class="descclassname">omas.omas_sample.</code><code class="descname">core_profiles</code><span class="sig-paren">(</span><em>ods</em>, <em>time_index=0</em>, <em>nx=11</em>, <em>add_junk_ion=False</em>, <em>include_pressure=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_sample.html#core_profiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_sample.core_profiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add sample core_profiles data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ods</strong> – ODS instance</li>
+<li><strong>time_index</strong> – int</li>
+<li><strong>nx</strong> – int
+Number of points in test profiles</li>
+<li><strong>add_junk_ion</strong> – bool
+Flag for adding a junk ion for testing how well functions tolerate problems. This will be missing labels, etc.</li>
+<li><strong>include_pressure</strong> – bool
+Include pressure profiles when temperature and density are added</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">ODS instance with profiles added.
+Since the original is modified, it is not necessary to catch the return, but it may be convenient to do so in
+some contexts. If you do not want the original to be modified, deepcopy it first.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_sample.pf_active">
+<code class="descclassname">omas.omas_sample.</code><code class="descname">pf_active</code><span class="sig-paren">(</span><em>ods</em>, <em>nc_weird=0</em>, <em>nc_undefined=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_sample.html#pf_active"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_sample.pf_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds some FAKE active PF coil locations so that the overlay plot will work in tests.
+It’s fine to test with dummy data as long as you know it’s not real.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ods</strong> – ODS instance</li>
+<li><strong>nc_weird</strong> – int
+Number of coils with badly defined geometry to include for testing plot overlay robustness</li>
+<li><strong>nc_undefined</strong> – int
+Number of coils with undefined geometry_type (But valid r, z outlines) to include for testing plot overlay
+robustness.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">ODS instance with FAKE PF ACTIVE HARDWARE INFORMATION added.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_sample.magnetics">
+<code class="descclassname">omas.omas_sample.</code><code class="descname">magnetics</code><span class="sig-paren">(</span><em>ods</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_sample.html#magnetics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_sample.magnetics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds some FAKE magnetic probe locations so that the overlay plot will work in tests. It’s fine to test
+with dummy data as long as you know it’s not real.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ods</strong> – ODS instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ODS instance with FAKE MAGNETICS HARDWARE INFORMATION added.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_sample.thomson_scattering">
+<code class="descclassname">omas.omas_sample.</code><code class="descname">thomson_scattering</code><span class="sig-paren">(</span><em>ods</em>, <em>nc=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_sample.html#thomson_scattering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_sample.thomson_scattering" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds some FAKE Thomson scattering channel locations so that the overlay plot will work in tests. It’s fine to test
+with dummy data as long as you know it’s not real.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ods</strong> – ODS instance</li>
+<li><strong>nc</strong> – Number of channels to add.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">ODS instance with FAKE THOMSON HARDWARE INFORMATION added.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_sample.charge_exchange">
+<code class="descclassname">omas.omas_sample.</code><code class="descname">charge_exchange</code><span class="sig-paren">(</span><em>ods</em>, <em>nc=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_sample.html#charge_exchange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_sample.charge_exchange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds some FAKE CER channel locations so that the overlay plot will work in tests. It’s fine to test
+with dummy data as long as you know it’s not real. This function can overwrite existing data if you’re not careful.
+The original is modified, so deepcopy first if you want different ODSs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ods</strong> – ODS instance</li>
+<li><strong>nc</strong> – Number of channels to add.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">ODS instance with FAKE CER HARDWARE INFORMATION added.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_sample.interferometer">
+<code class="descclassname">omas.omas_sample.</code><code class="descname">interferometer</code><span class="sig-paren">(</span><em>ods</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_sample.html#interferometer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_sample.interferometer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds some FAKE interferometer locations so that the overlay plot will work in tests. It’s fine to test
+with dummy data as long as you know it’s not real.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ods</strong> – ODS instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ODS instance with FAKE INTERFEROMETER HARDWARE INFORMATION added.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_sample.bolometer">
+<code class="descclassname">omas.omas_sample.</code><code class="descname">bolometer</code><span class="sig-paren">(</span><em>ods</em>, <em>nc=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_sample.html#bolometer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_sample.bolometer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds some FAKE bolometer chord locations so that the overlay plot will work in tests. It’s fine to test
+with dummy data as long as you know it’s not real.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ods</strong> – ODS instance</li>
+<li><strong>nc</strong> – 10  # Number of fake channels to make up for testing</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">ODS instance with FAKE BOLOMETER HARDWARE INFORMATION added.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_sample.gas_injection">
+<code class="descclassname">omas.omas_sample.</code><code class="descname">gas_injection</code><span class="sig-paren">(</span><em>ods</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/omas/omas_sample.html#gas_injection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_sample.gas_injection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds some FAKE gas injection locations so that the overlay plot will work in tests. It’s fine to test
+with dummy data as long as you know it’s not real. This function can overwrite existing data if you’re not careful.
+The original is modified, so deepcopy first if you want different ODSs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ods</strong> – ODS instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ODS instance with FAKE GAS INJECTION HARDWARE INFORMATION added.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017-2019 O. Meneghini and collaborators.<br/>
+      Last updated on Nov 19, 2019.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

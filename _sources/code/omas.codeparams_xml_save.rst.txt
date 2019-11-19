@@ -1,0 +1,6 @@
+omas.codeparams\_xml\_save
+==========================
+
+.. currentmodule:: omas
+
+.. autofunction:: codeparams_xml_save

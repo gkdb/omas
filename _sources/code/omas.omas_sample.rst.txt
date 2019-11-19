@@ -1,0 +1,33 @@
+omas.omas\_sample
+=================
+
+.. automodule:: omas.omas_sample
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      add_to_ODS
+      bolometer
+      charge_exchange
+      core_profiles
+      dataset_description
+      equilibrium
+      gas_injection
+      interferometer
+      magnetics
+      ods_sample
+      pf_active
+      thomson_scattering
+   
+   
+
+   
+   
+   
+
+   
+   
+   

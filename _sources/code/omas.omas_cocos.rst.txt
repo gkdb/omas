@@ -1,0 +1,16 @@
+omas.omas\_cocos
+================
+
+.. automodule:: omas.omas_cocos
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

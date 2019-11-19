@@ -1,0 +1,43 @@
+omas.CodeParameters
+===================
+
+.. currentmodule:: omas
+
+.. autoclass:: CodeParameters
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CodeParameters.__init__
+      ~CodeParameters.clear
+      ~CodeParameters.copy
+      ~CodeParameters.fromfile
+      ~CodeParameters.fromkeys
+      ~CodeParameters.fromstring
+      ~CodeParameters.get
+      ~CodeParameters.has_key
+      ~CodeParameters.items
+      ~CodeParameters.iteritems
+      ~CodeParameters.iterkeys
+      ~CodeParameters.itervalues
+      ~CodeParameters.keys
+      ~CodeParameters.pop
+      ~CodeParameters.popitem
+      ~CodeParameters.setdefault
+      ~CodeParameters.tostring
+      ~CodeParameters.update
+      ~CodeParameters.values
+      ~CodeParameters.viewitems
+      ~CodeParameters.viewkeys
+      ~CodeParameters.viewvalues
+   
+   
+
+   
+   
+   

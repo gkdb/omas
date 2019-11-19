@@ -1,0 +1,24 @@
+omas.omas\_nc
+=============
+
+.. automodule:: omas.omas_nc
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      load_omas_nc
+      save_omas_nc
+      through_omas_nc
+   
+   
+
+   
+   
+   
+
+   
+   
+   

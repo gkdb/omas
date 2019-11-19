@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Concept &#8212; OMAS</title>
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img height=40, src="_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="#">Concept</a></li>
+                <li><a href="auto_examples/index.html">Examples</a></li>
+                <li><a href="install.html">Installation</a></li>
+                <li><a href="iter.html">ITER</a></li>
+                <li><a href="omfit.html">OMFIT</a></li>
+                <li><a href="schema.html">Data schema</a></li>
+                <li><a href="code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Concept</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <div class="section" id="concept">
+<h1>Concept<a class="headerlink" href="#concept" title="Permalink to this headline">¶</a></h1>
+<p id="id1">The hierarchical IMAS data model is represented in OMAS as a set of nested <cite>ODS</cite> objects (OMAS Data Structure).</p>
+<p>The <cite>ODS</cite> class extends native Python dictionary and list classes with:</p>
+<ol class="arabic">
+<li><p class="first">On-the-fly check for <strong>compliance with IMAS data model</strong></p>
+<ul class="simple">
+<li>enforce consistency with IMAS data structure</li>
+<li>enforce correct data type</li>
+<li>enforce correct number of data dimensions (1D, 2D, 3D, …)</li>
+<li>warn if obsolescent IMAS entries are used</li>
+</ul>
+</li>
+<li><p class="first"><strong>Graceful error handling</strong> with suggestions for navigating the hierarchical data structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>LookupError: `equilibrium.time_slice.:.does_not_exist` is not a valid IMAS location
+                                       ^^^^^^^^^^^^^^
+Did you mean: [&#39;coordinate_system&#39;, &#39;profiles_1d&#39;, &#39;profiles_2d&#39;, &#39;ggd&#39;, &#39;time&#39;, &#39;convergence&#39;, &#39;boundary&#39;, &#39;global_quantities&#39;, &#39;constraints&#39;]
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Dynamic creation of the tree hierarchy</strong> as items they are accessed with support for <strong>different syntaxes</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">][</span><span class="s1">&#39;time_slice&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;profiles_2d&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;psi&#39;</span><span class="p">]</span>   <span class="c1"># standard Python dictionary syntax</span>
+<span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice[0].profiles_2d[0].psi&#39;</span><span class="p">]</span>            <span class="c1"># IMAS hierarchical tree syntax</span>
+<span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice.0.profiles_2d.0.psi&#39;</span><span class="p">]</span>              <span class="c1"># dot separated string syntax</span>
+<span class="n">ods</span><span class="p">[[</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">,</span><span class="s1">&#39;time_slice&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;profiles_2d&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;psi&#39;</span><span class="p">]]</span>      <span class="c1"># list of nodes syntax</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Extract sigle time slice</strong> from whole data structure:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ods</span><span class="o">.</span><span class="n">slice_at_time</span><span class="p">(</span><span class="mf">1000.</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Simplified handling of array of structures</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;wall.description_2d.3.limiter.type.name&#39;</span><span class="p">]</span>      <span class="c1"># use `#` to access entries as in a list</span>
+<span class="n">ods</span><span class="p">[</span><span class="s1">&#39;wall.description_2d.-1.limiter.type.name&#39;</span><span class="p">]</span>      <span class="c1"># use `-#` to access entries from the end of the list</span>
+<span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice.:.global_quantities.ip&#39;</span><span class="p">]</span> <span class="c1"># use `:` to collect quantities across list of structures</span>
+<span class="n">ods</span><span class="p">[</span><span class="s1">&#39;wall.description_2d.+.limiter.type.name&#39;</span><span class="p">]</span>       <span class="c1"># use `+` to append entries to a list of structures</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Automatic handling of XML code.parameters</strong> will show them as dictionaries and save them as XML into IMAS:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.code.parameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CodeParameters</span><span class="p">(</span><span class="s1">&#39;./parameters.xml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Automatic <strong>COCOS transformations</strong> [<a class="reference external" href="https://docs.google.com/document/d/1-efimTbI55SjxL_yE_GKSmV4GEvdzai7mAj5UYLLUXw/edit?usp=sharing">read the COCOS cheatsheet</a>]:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">omas_environment</span><span class="p">(</span><span class="n">ods</span><span class="p">,</span> <span class="n">cocosio</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice.0.profiles_1d.psi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gEQDSK</span><span class="p">[</span><span class="s1">&#39;psi&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Automatic <strong>coordinate interpolations</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">omas_environment</span><span class="p">(</span><span class="n">ods</span><span class="p">,</span> <span class="n">coordsio</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;equilibrium.time_slice[0].profiles_1d.psi&#39;</span><span class="p">:</span> <span class="n">gEQDSK</span><span class="p">[</span><span class="s1">&#39;psi&#39;</span><span class="p">]}):</span>
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice[0].profiles_1d.pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gEQDSK</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Automatic <strong>units conversions</strong> via <a class="reference external" href="http://pint.readthedocs.io/en/latest/">pint Python package</a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice[0].constraints.diamagnetic_flux.time_measurement&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">8.0</span> <span class="o">*</span> <span class="n">milliseconds</span>
+<span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice[0].constraints.diamagnetic_flux.time_measurement&#39;</span><span class="p">]</span> <span class="c1"># will return 0.008</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Unified interface for <strong>querying about time</strong> dimension:</p>
+</li>
+</ol>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ods</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">)</span>                                     <span class="c1"># will return an array of times</span>
+<span class="n">ods</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="s1">&#39;equilibrium.time_slice&#39;</span><span class="p">)</span>                          <span class="c1"># will return an array of times</span>
+<span class="n">ods</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="s1">&#39;equilibrium.time_slice.0.global_quantities.ip&#39;</span><span class="p">)</span>   <span class="c1"># will return a scalar time</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic" start="11">
+<li><p class="first">Seamless handling of <strong>uncertain quantities</strong> via <a class="reference external" href="https://github.com/lebigot/uncertainties">uncertainties Python package</a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice.0.profiles_1d.q&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uarray</span><span class="p">(</span><span class="n">nom_value</span><span class="p">,</span> <span class="n">std_dev</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Evaluate <strong>derived quantities</strong> from more fundamental ones:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ods</span><span class="o">.</span><span class="n">physics_core_profiles_pressures</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Get data as multidimensional array structures</strong> in <a class="reference external" href="http://xarray.pydata.org/en/stable/">xarray</a> format:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;core_profiles.profiles_1d.0.electrons.density_thermal&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">xarray</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Conveniently <strong>plot individual quantities</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ods</span><span class="o">.</span><span class="n">plot_quantity</span><span class="p">(</span><span class="s1">&#39;core_profiles.profiles_1d.0.electrons.density_thermal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Use regular expressions</strong> with <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> construct for accessing data and plotting:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;@core.*0.elect.*dens.*th&#39;</span><span class="p">]</span>
+<span class="n">ods</span><span class="o">.</span><span class="n">plot_quantity</span><span class="p">(</span><span class="s1">&#39;@core.*0.elect.*dens.*th&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Predefined set of plots</strong> available:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ods</span><span class="o">.</span><span class="n">plot_core_profiles_summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Save/load ODSs to/from <strong>different storage systems</strong>:</p>
+</li>
+</ol>
+<table border="1" class="docutils" id="omas-formats">
+<colgroup>
+<col width="11%" />
+<col width="44%" />
+<col width="17%" />
+<col width="11%" />
+<col width="16%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">OMAS format</th>
+<th class="head">Description</th>
+<th class="head">Storage type</th>
+<th class="head">Remote storage</th>
+<th class="head">Python Requirements</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>pickle</strong></td>
+<td>Files using native Python serialization tools</td>
+<td>Python binary file</td>
+<td>no</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>Json</strong></td>
+<td>Using Json format for representing hierarchical data</td>
+<td>ASCII file</td>
+<td>no</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>NetCDF</strong></td>
+<td>Files using binary NetCDF format (flat data structure)</td>
+<td>Binary file</td>
+<td>no</td>
+<td>netCDF4</td>
+</tr>
+<tr class="row-odd"><td><strong>HDF5</strong></td>
+<td>Files using binary HDF5 format (hierarchical data structure)</td>
+<td>Binary file</td>
+<td>no</td>
+<td>h5py</td>
+</tr>
+<tr class="row-even"><td><strong>S3</strong></td>
+<td>Cloud storage using Amazon Simple Storage Service</td>
+<td>Object Store</td>
+<td>yes</td>
+<td>boto3</td>
+</tr>
+<tr class="row-odd"><td><strong>MongoDB</strong></td>
+<td>Document-based distributed database</td>
+<td>MongoDB Database</td>
+<td>yes</td>
+<td>pymongo</td>
+</tr>
+<tr class="row-even"><td><strong>HDC</strong></td>
+<td>Hierarchical Dynamic Containers</td>
+<td>Memory</td>
+<td>no</td>
+<td>pyhdc (optional)</td>
+</tr>
+<tr class="row-odd"><td><strong>UDA</strong></td>
+<td>Universal Data Access</td>
+<td>UDA Database</td>
+<td>yes</td>
+<td>pyuda (optional)</td>
+</tr>
+<tr class="row-even"><td><strong>IMAS</strong></td>
+<td>ITER data storage system</td>
+<td>IMAS Database</td>
+<td>no</td>
+<td>imas (optional)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017-2019 O. Meneghini and collaborators.<br/>
+      Last updated on Nov 19, 2019.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

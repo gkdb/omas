@@ -1,0 +1,6 @@
+omas.wall\_add
+==============
+
+.. currentmodule:: omas
+
+.. autofunction:: wall_add

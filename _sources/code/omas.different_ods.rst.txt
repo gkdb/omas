@@ -1,0 +1,6 @@
+omas.different\_ods
+===================
+
+.. currentmodule:: omas
+
+.. autofunction:: different_ods

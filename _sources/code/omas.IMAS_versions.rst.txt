@@ -1,0 +1,40 @@
+omas.IMAS\_versions
+===================
+
+.. currentmodule:: omas
+
+.. autoclass:: IMAS_versions
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~IMAS_versions.__init__
+      ~IMAS_versions.clear
+      ~IMAS_versions.copy
+      ~IMAS_versions.fromkeys
+      ~IMAS_versions.get
+      ~IMAS_versions.has_key
+      ~IMAS_versions.items
+      ~IMAS_versions.iteritems
+      ~IMAS_versions.iterkeys
+      ~IMAS_versions.itervalues
+      ~IMAS_versions.keys
+      ~IMAS_versions.pop
+      ~IMAS_versions.popitem
+      ~IMAS_versions.setdefault
+      ~IMAS_versions.update
+      ~IMAS_versions.values
+      ~IMAS_versions.viewitems
+      ~IMAS_versions.viewkeys
+      ~IMAS_versions.viewvalues
+   
+   
+
+   
+   
+   

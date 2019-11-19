@@ -1,0 +1,6 @@
+omas.current\_from\_eq
+======================
+
+.. currentmodule:: omas
+
+.. autofunction:: current_from_eq

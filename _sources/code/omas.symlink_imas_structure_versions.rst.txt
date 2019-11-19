@@ -1,0 +1,6 @@
+omas.symlink\_imas\_structure\_versions
+=======================================
+
+.. currentmodule:: omas
+
+.. autofunction:: symlink_imas_structure_versions

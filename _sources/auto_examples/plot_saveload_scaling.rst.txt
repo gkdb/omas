@@ -1,0 +1,387 @@
+.. note::
+    :class: sphx-glr-download-link-note
+
+    Click :ref:`here <sphx_glr_download_auto_examples_plot_saveload_scaling.py>` to download the full example code
+.. rst-class:: sphx-glr-example-title
+
+.. _sphx_glr_auto_examples_plot_saveload_scaling.py:
+
+
+Scaling IMAS performance
+========================
+This example shows a scaling performance study for manipulating OMAS data in hierarchical or tensor format.
+
+The **hierarchical organization of the IMAS data** structure can in some situations hinder IMAS's ability to efficiently manipulate large data sets.
+This contrasts to the **multidimensional arrays (ie. tensors)** approach that is commonly used in computer science for high-performance numerical calculations.
+
+Based on this observation OMAS implements a transformation that casts the data that is contained in the IMAS hierarchical structure as a list of tensors, by taking advantage of the homogeneity of grid sizes that is commonly found across arrays of structures.
+Such transformation and a summary of the scaling results are illustrated here for an hypothetical IDS that has data organized as a series of time-slices:
+
+.. figure:: ../images/odx_concept.png
+  :align: center
+  :width: 100%
+  :alt: OMAS implements a transformation that casts the data that is contained in the IMAS hierarchical structure as a list of tensors
+  :target: /.._images/odx_concept.png
+
+The favorable scaling that is observed when representing IMAS data in tensor form makes a strong case for adopting it.
+Implementing the same system as part of the IMAS backend storage of data and in memory representation would likely greatly benefit IMAS performance in many real-world applications.
+
+The new tensors representation would also greatly simplify the integration of IMAS with a broad range of tools and numerical libraries that are commonly used across many fields of science.
+
+Finally, the addition of an extra dimension to the tensors could be used to efficiently store multiple realizations of signals from a distribution function of uncertain quantities.
+Such feature would enable support of uncertainty quantification workflows and Bayesian integrated data analyses within IMAS.
+
+Scaling study in detail
+-----------------------
+
+OMAS can seamlessly use either hierarchical or tensor representations as the backend for storing data both in memory and on file, and transform from one format to the other.
+The mapping function is generic and can handle nested hierarchical list of structures (not only in time).
+Also OMAS can automatically determine which data can be collected across the hierarchical structure, which cannot, and seamlessly handle both at the same time.
+
+The following diagram summarizes the tests performed in this scaling study.
+Benchmarks show that most operations stemming from the hierarchical representation of the data scale linearly with with the number of time-slices in the sample IDS (**red markers** in the diagram), whereas operations that make only use of the tensor representation show little to no dependency on the dataset size (**green markers** in the diagram).
+As a result the tensors representation can be several orders of magnitude faster than a hierarchical organization, even for datasets of modest size.
+
+.. figure:: ../images/odx_flow.png
+  :align: center
+  :width: 50%
+  :alt: OMAS can seamlessly use either hierarchical or tensor representations as backed for storing data both in memory and on file, and transform from one format to the other
+  :target: /.._images/odx_flow.png
+
+Scaling plots and code used for the benchmark follow:
+
+
+
+
+
+.. rst-class:: sphx-glr-horizontal
+
+
+    *
+
+      .. image:: /auto_examples/images/sphx_glr_plot_saveload_scaling_001.png
+            :class: sphx-glr-multi-img
+
+    *
+
+      .. image:: /auto_examples/images/sphx_glr_plot_saveload_scaling_002.png
+            :class: sphx-glr-multi-img
+
+    *
+
+      .. image:: /auto_examples/images/sphx_glr_plot_saveload_scaling_003.png
+            :class: sphx-glr-multi-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    1/100
+    2/100
+    3/100
+    6/100
+    10/100
+    15/100
+    25/100
+    39/100
+    63/100
+    100/100
+    [1, 2, 3, 6, 10, 15, 25, 39, 63, 100]
+    {'HA': [6.580352783203125e-05,
+            5.896091461181641e-05,
+            6.296634674072266e-05,
+            5.671977996826172e-05,
+            5.324125289916992e-05,
+            5.342642466227214e-05,
+            5.615997314453125e-05,
+            5.3674135452661757e-05,
+            5.777147081163195e-05,
+            6.475400924682618e-05],
+     'HB': [6.499290466308594e-05,
+            9.751319885253906e-05,
+            0.00014190673828125,
+            0.00026869773864746094,
+            0.0003645896911621094,
+            0.0005243062973022461,
+            0.0008420944213867188,
+            0.0013247966766357423,
+            0.002126908302307129,
+            0.0034715890884399413],
+     'HM': [0.12194418907165527,
+            0.11880087852478027,
+            0.12268710136413574,
+            0.1262669563293457,
+            0.14459586143493652,
+            0.1536850929260254,
+            0.19206809997558594,
+            0.2878270149230957,
+            0.32131314277648926,
+            0.5096549987792969],
+     'HR': [0.025803089141845703,
+            0.045042991638183594,
+            0.07628202438354492,
+            0.1268138885498047,
+            0.20952701568603516,
+            0.3119940757751465,
+            0.5223119258880615,
+            0.8128700256347656,
+            1.302638053894043,
+            2.1683361530303955],
+     'HS': [8.916854858398438e-05,
+            0.00010597705841064453,
+            0.00015266736348470053,
+            0.0002938111623128255,
+            0.00035970211029052735,
+            0.0005356629689534505,
+            0.0008501148223876953,
+            0.0013263836885109926,
+            0.002139065000745985,
+            0.0037282896041870117],
+     'HW': [0.07886481285095215,
+            0.03694796562194824,
+            0.06454205513000488,
+            0.10100984573364258,
+            0.16382718086242676,
+            0.24741888046264648,
+            0.40589213371276855,
+            0.640437126159668,
+            1.0369269847869873,
+            1.675680160522461],
+     'TA': [0.00016539096832275392,
+            0.0001801609992980957,
+            0.0001802682876586914,
+            0.00015433231989542644,
+            0.00014478206634521484,
+            0.00013866583506266276,
+            0.0001431884765625,
+            0.00014685606345152242,
+            0.00014638560158865792,
+            0.0001491520404815674],
+     'TB': [9.140968322753906e-05,
+            0.00010811090469360351,
+            8.087158203125e-05,
+            8.23815663655599e-05,
+            8.057117462158203e-05,
+            7.791360219319662e-05,
+            8.120059967041017e-05,
+            8.080800374348958e-05,
+            8.156678033253504e-05,
+            7.990312576293946e-05],
+     'TM': [0.019195079803466797,
+            0.026349782943725586,
+            0.02646183967590332,
+            0.04320812225341797,
+            0.0673069953918457,
+            0.0861959457397461,
+            0.1514730453491211,
+            0.2327430248260498,
+            0.3769190311431885,
+            0.6263241767883301],
+     'TR': [0.03668093681335449,
+            0.03721880912780762,
+            0.03171277046203613,
+            0.03136396408081055,
+            0.032508134841918945,
+            0.03144502639770508,
+            0.03188490867614746,
+            0.03142499923706055,
+            0.03215217590332031,
+            0.0371549129486084],
+     'TS': [0.00010590553283691406,
+            9.86933708190918e-05,
+            9.729862213134766e-05,
+            8.249680201212565e-05,
+            8.182048797607422e-05,
+            8.22003682454427e-05,
+            8.189201354980469e-05,
+            8.17408928504357e-05,
+            8.150320204477462e-05,
+            8.452510833740234e-05],
+     'TW': [0.24837493896484375,
+            0.16985797882080078,
+            0.172760009765625,
+            0.16165590286254883,
+            0.2506749629974365,
+            0.1626300811767578,
+            0.1608891487121582,
+            0.15933990478515625,
+            0.17034292221069336,
+            0.17642617225646973]}
+
+
+
+
+|
+
+
+.. code-block:: python
+
+
+    import os
+    import time
+    import tempfile
+    from omas import *
+    import numpy
+    from pprint import pprint
+    from matplotlib import pyplot
+
+    ods = ODS()
+    ods.sample_equilibrium()
+
+    max_n = 100
+    max_samples = 11
+    stats_reps = 10
+    samples = numpy.unique(list(map(int, numpy.logspace(0, numpy.log10(max_n), max_samples)))).tolist()
+    max_samples = len(samples)
+
+    times = {}
+    for type in ['H', 'T']:  # hierarchical or tensor
+        for action in ['R', 'W', 'M', 'A', 'S', 'B']:  # Read, Write, Mapping, Array access, Stripe access, Bulk access
+            times[type + action] = []
+
+    for n in samples:
+        print('%d/%d'%(n,samples[-1]))
+
+        # keep adding time slices to the data structure
+        for k in range(len(ods['equilibrium.time_slice']), n):
+            ods.sample_equilibrium(time_index=k)
+
+        # hierarchical write to HDF5
+        filename = tempfile.gettempdir() + os.sep + 'tmp.h5'
+        t0 = time.time()
+        save_omas_h5(ods, filename)
+        times['HW'].append(time.time() - t0)
+
+        # hierarchical read from HDF5
+        t0 = time.time()
+        load_omas_h5(filename)
+        times['HR'].append(time.time() - t0)
+
+        # hierarchical access to individual array
+        t0 = time.time()
+        for k in range(stats_reps):
+            for kk in range(n):
+                ods['equilibrium.time_slice.%d.profiles_1d.psi' % kk]
+        times['HA'].append((time.time() - t0) / n / float(stats_reps))
+
+        # hierarchical slice across the data structure
+        t0 = time.time()
+        for kk in range(n):
+            ods['equilibrium.time_slice.:.profiles_1d.psi'][:, 0]
+        times['HS'].append((time.time() - t0) / n)
+
+        # hierarchical bulk access to data
+        t0 = time.time()
+        for k in range(stats_reps):
+            ods['equilibrium.time_slice.:.profiles_1d.psi']
+        times['HB'].append((time.time() - t0) / float(stats_reps))
+
+        # hierarchical mapping to tensor
+        t0 = time.time()
+        odx = ods_2_odx(ods)
+        times['HM'].append(time.time() - t0)
+
+        filename = tempfile.gettempdir() + os.sep + 'tmp.ds'
+
+        # tensor write to HDF5
+        t0 = time.time()
+        save_omas_dx(odx, filename)
+        times['TW'].append(time.time() - t0)
+
+        # tensor read from HDF5
+        t0 = time.time()
+        odx = load_omas_dx(filename)
+        times['TR'].append(time.time() - t0)
+
+        # tensor mapping to hierarchical
+        t0 = time.time()
+        ods = odx_2_ods(odx)
+        times['TM'].append(time.time() - t0)
+
+        # tensor access to individual array
+        t0 = time.time()
+        for k in range(stats_reps):
+            for kk in range(n):
+                odx['equilibrium.time_slice.%d.profiles_1d.psi' % kk]
+        times['TA'].append((time.time() - t0) / n / float(stats_reps))
+
+        # tensor slice across the data structure
+        t0 = time.time()
+        for k in range(stats_reps):
+            for kk in range(n):
+                odx['equilibrium.time_slice.:.profiles_1d.psi'][:, 0]
+        times['TS'].append((time.time() - t0) / n / float(stats_reps))
+
+        # tensor bulk access to data
+        t0 = time.time()
+        for k in range(stats_reps):
+            for kk in range(n):
+                odx['equilibrium.time_slice.:.profiles_1d.psi']
+        times['TB'].append((time.time() - t0) / n / float(stats_reps))
+
+    # print numbers to screen
+    print(samples)
+    pprint(times)
+
+    # plot read/write scaling
+    pyplot.figure()
+    for type in ['H', 'T']:  # hierarchical or tensor
+        for action in ['R', 'W']:  # Read, Write
+            pyplot.loglog(samples, times[type + action], label=type + action, lw=1.5, ls=['-', '--']['H' in type])
+    pyplot.xlabel('# of Equilibrium Time Slices')
+    pyplot.ylabel('Time [s]')
+    pyplot.legend(loc='upper left', frameon=False)
+    pyplot.title('Read/Write', y=0.85, x=0.7)
+
+    # plot mapping scaling
+    pyplot.figure()
+    for type in ['H', 'T']:  # hierarchical or tensor
+        for action in ['M']:  # Mapping
+            pyplot.loglog(samples, times[type + action], label=type + action, lw=1.5, ls=['-', '--']['H' in type])
+    pyplot.xlabel('# of Equilibrium Time Slices')
+    pyplot.ylabel('Time [s]')
+    pyplot.legend(loc='upper left', frameon=False)
+    pyplot.title('Mapping', y=0.85, x=0.7)
+
+    # plot access scaling
+    pyplot.figure()
+    for type in ['H', 'T']:  # hierarchical or tensor
+        for action in ['A', 'S', 'B']:  # Array access, Stripe access, Bulk access
+            pyplot.loglog(samples, times[type + action], label=type + action, lw=1.5, ls=['-', '--']['H' in type])
+    pyplot.xlabel('# of Equilibrium Time Slices')
+    pyplot.ylabel('Time [s]')
+    pyplot.legend(loc='upper left', frameon=False)
+    pyplot.title('Access', y=0.85, x=0.7)
+
+    pyplot.show()
+
+
+.. _sphx_glr_download_auto_examples_plot_saveload_scaling.py:
+
+
+.. only :: html
+
+ .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Python source code: plot_saveload_scaling.py <plot_saveload_scaling.py>`
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Jupyter notebook: plot_saveload_scaling.ipynb <plot_saveload_scaling.ipynb>`
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.readthedocs.io>`_
